@@ -176,7 +176,31 @@
     
     // fumble
     if (!someoneWon) {
-        // TODO: fumble
+        // see who will fumble
+        int highestMoney = 0;
+        for (Player* player in _players) {
+            if (player.money > highestMoney) {
+                highestMoney = player.money;
+            }
+        }
+        
+        // do fumble
+        int fumbleAmount = highestMoney / 2;
+        for (Player* player in _players) {
+            if (player.money == highestMoney) {
+                [player gainMoney:-1 * fumbleAmount];
+                [_gameBoard fumbleMoneyAdd:fumbleAmount];
+            }
+        }
+        
+        // redistribute fumble
+        while (_gameBoard.fumbleMoneyTotal >= (int)[_players count]) {
+            [_gameBoard fumbleMoneyRemove:(int)[_players count]];
+            for (Player* player in _players) {
+                [player gainMoney:1];
+            }
+        }
+        
     }
 }
 
