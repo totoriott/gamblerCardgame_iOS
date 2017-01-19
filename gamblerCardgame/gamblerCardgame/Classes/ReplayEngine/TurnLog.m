@@ -10,4 +10,16 @@
 
 @implementation TurnLog
 
+- (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId {
+    return; // TODO
+}
+
+- (void)logLuckAdjust:(int)adjust {
+    return; // TODO
+}
+
+- (void)logEndTurnAction:(int)action cardSelected:(int)cardNumber {
+    return; // TODO
+}
+
 @end

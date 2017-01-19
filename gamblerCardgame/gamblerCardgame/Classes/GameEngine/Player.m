@@ -14,4 +14,21 @@
     return @[@0, @1]; // TODO
 }
 
+- (void)gainMoney:(int)amount {
+    // TODO
+}
+
+- (int)payoffAllCardsWithValue:(int)winningNumber {
+    return 0; // TODO
+}
+
+- (void)setCardToSuperWithValue:(int)winningNumber {
+    // TODO
+}
+
+- (void)addCardGambler:(CardGambler*)cardGambler {
+    // TODO
+}
+
+
 @end

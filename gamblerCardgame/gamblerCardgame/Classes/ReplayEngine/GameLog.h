@@ -8,8 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#import "TurnLog.h"
+
 @interface GameLog : NSObject
 
-// TODO: whatever
+@property (nonatomic) int playerCount;
+@property (nonatomic, weak) NSMutableArray<TurnLog*>* turns;
+
+- (TurnLog*)mostRecentTurn;
+
+- (void)startNewTurn;
 
 @end

@@ -10,4 +10,12 @@
 
 @implementation GameLog
 
+- (TurnLog*)mostRecentTurn {
+    return nil;
+}
+
+- (void)startNewTurn {
+    return nil;
+}
+
 @end

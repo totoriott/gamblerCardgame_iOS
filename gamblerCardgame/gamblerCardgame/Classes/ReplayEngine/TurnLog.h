@@ -10,6 +10,8 @@
 
 @interface TurnLog : NSObject
 
-// TODO: whatever
+- (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId;
+- (void)logLuckAdjust:(int)adjust;
+- (void)logEndTurnAction:(int)action cardSelected:(int)cardNumber;
 
 @end

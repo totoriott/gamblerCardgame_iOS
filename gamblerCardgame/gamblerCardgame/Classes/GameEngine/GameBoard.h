@@ -15,4 +15,9 @@
 @property (nonatomic) int fumbleMoneyTotal;
 @property (nonatomic, weak) NSMutableArray<CardGambler*>* cardsForSale; // TODO: consider refactoring how this is stored
 
+- (CardGambler*)buyCardWithNumber:(int)winningNumber;
+
+- (void)fumbleMoneyAdd:(int)amount;
+- (void)fumbleMoneyRemove:(int)amount;
+
 @end

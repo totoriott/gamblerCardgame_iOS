@@ -25,4 +25,14 @@
 @property (nonatomic, weak) GameLog* gameLog;
 @property (nonatomic, weak) GameBoard* gameBoard;
 
+- (void)runGame;
+
+- (BOOL)hasFirstPlayerPlayedLuck;
+- (BOOL)haveAllPlayersPlayedLuck;
+- (BOOL)hasFirstPlayerChosenAdjustAction;
+- (BOOL)hasFirstPlayerChosenEndTurnAction;
+
+- (void)processGamble;
+- (void)processEndTurn;
+
 @end
