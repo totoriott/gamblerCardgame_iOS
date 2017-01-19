@@ -14,7 +14,7 @@
     _gameConfig = [[GameConfig alloc] init];
     _gameLog = [[GameLog alloc] initWithPlayerCount:playerCount];
     
-    // TODO: init game board
+    _gameBoard = [[GameBoard alloc] initWithCardConfigs:_gameConfig.cardConfigs];
     
     _players = [NSMutableArray array];
     
@@ -36,11 +36,12 @@
 }
 
 - (void)printGameStatus {
+    NSLog(@"Turn %d", (int)[[_gameLog turns] count]);
+    NSLog(@"%@", [_gameBoard boardStatusString]);
+    
     for (int i = 0; i < [_players count]; i++) {
         NSLog(@"%@", [_players[i] playerStatusString]);
     }
-    
-    // TODO: print more game stuff
 }
 
 - (BOOL)hasFirstPlayerPlayedLuck {

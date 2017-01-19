@@ -10,6 +10,22 @@
 
 @implementation CardGambler
 
+- (instancetype)initWithCardConfig:(NSArray*)config {
+    if (self = [super init]) {
+        _isSuper = NO;
+        
+        // TODO: don't hardcode?
+        _winningNumber = [config[1] intValue];
+        _superWinningNumber = [config[2] intValue];
+        _cost = [config[3] intValue];
+        _cardValueGranted = [config[4] intValue];
+        _superCardValueGranted = [config[5] intValue];
+        _payoutValue = [config[6] intValue];
+        _superPayoutValue = [config[7] intValue];
+    }
+    return self;
+}
+
 - (GameActionStatus)resetToNormal {
     _isSuper = NO;
     

@@ -14,7 +14,11 @@
 @interface GameBoard : NSObject
 
 @property (nonatomic) int fumbleMoneyTotal;
-@property (nonatomic, weak) NSMutableArray<CardGambler*>* cardsForSale; // TODO: consider refactoring how this is stored
+@property (nonatomic, strong) NSMutableArray<CardGambler*>* cardsForSale;
+
+- (instancetype)initWithCardConfigs:(NSArray*)configs;
+
+- (NSString*)boardStatusString;
 
 - (CardGambler*)buyCardWithNumber:(int)winningNumber;
 

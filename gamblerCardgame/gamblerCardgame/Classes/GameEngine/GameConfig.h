@@ -12,6 +12,6 @@
 
 @property (nonatomic) NSArray<NSNumber*>* moneyStart;
 @property (nonatomic) int moneyGoal;
-@property (nonatomic, weak) NSArray* cardConfigs;
+@property (nonatomic, strong) NSArray* cardConfigs;
 
 @end

@@ -10,6 +10,34 @@
 
 @implementation GameBoard
 
+- (instancetype)initWithCardConfigs:(NSArray*)configs {
+    if (self = [super init]) {
+        _fumbleMoneyTotal = 0;
+        
+        // TODO: consider refactoring how this is stored
+        _cardsForSale = [NSMutableArray array];
+        for (NSArray* config in configs) {
+            int count = [config[0] intValue];
+            for (int i = 0; i < count; i++) {
+                CardGambler* newCard = [[CardGambler alloc] initWithCardConfig:config];
+                [_cardsForSale addObject:newCard];
+            }
+        }
+    }
+    return self;
+}
+
+- (NSString *)boardStatusString {
+    NSString* statusString = @"";
+    for (CardGambler* card in _cardsForSale) {
+        statusString = [NSString stringWithFormat:@"%@[%d]", statusString, [card cardWinningNumber]];
+    }
+    
+    statusString = [NSString stringWithFormat:@"%@ - fumble $%d", statusString, _fumbleMoneyTotal];
+    
+    return statusString;
+}
+
 - (CardGambler*)buyCardWithNumber:(int)winningNumber {
     return nil; // TODO
 }

@@ -23,6 +23,8 @@
 @property (nonatomic) int superPayoutValue;
 @property (nonatomic) int superCardValueGranted;
 
+- (instancetype)initWithCardConfig:(NSArray*)config;
+
 - (GameActionStatus)resetToNormal;
 - (GameActionStatus)setToSuper;
 
