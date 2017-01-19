@@ -10,11 +10,11 @@
 
 @implementation CardGambler
 
-- (void)resetToNormal {
+- (GameActionStatus)resetToNormal {
     // TODO
 }
 
-- (void)setToSuper {
+- (GameActionStatus)setToSuper {
     // TODO
 }
 

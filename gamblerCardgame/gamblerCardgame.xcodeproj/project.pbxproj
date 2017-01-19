@@ -20,6 +20,7 @@
 		8B84287B1E308F4600D754AF /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428711E308F4600D754AF /* Player.m */; };
 		8B84287C1E308F4600D754AF /* GameLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428741E308F4600D754AF /* GameLog.m */; };
 		8B84287D1E308F4600D754AF /* TurnLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428761E308F4600D754AF /* TurnLog.m */; };
+		8B8428811E309A2100D754AF /* GameUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428801E309A2100D754AF /* GameUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		8B8428741E308F4600D754AF /* GameLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLog.m; sourceTree = "<group>"; };
 		8B8428751E308F4600D754AF /* TurnLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurnLog.h; sourceTree = "<group>"; };
 		8B8428761E308F4600D754AF /* TurnLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurnLog.m; sourceTree = "<group>"; };
+		8B84287F1E309A2100D754AF /* GameUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameUtils.h; sourceTree = "<group>"; };
+		8B8428801E309A2100D754AF /* GameUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +107,7 @@
 		8B8428661E308F4600D754AF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8B84287E1E309A2100D754AF /* Utils */,
 				8B8428671E308F4600D754AF /* GameEngine */,
 				8B8428721E308F4600D754AF /* ReplayEngine */,
 			);
@@ -136,6 +140,15 @@
 				8B8428761E308F4600D754AF /* TurnLog.m */,
 			);
 			path = ReplayEngine;
+			sourceTree = "<group>";
+		};
+		8B84287E1E309A2100D754AF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8B84287F1E309A2100D754AF /* GameUtils.h */,
+				8B8428801E309A2100D754AF /* GameUtils.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +229,7 @@
 				8B8428781E308F4600D754AF /* GameBoard.m in Sources */,
 				8B8428541E308F3200D754AF /* AppDelegate.m in Sources */,
 				8B8428511E308F3200D754AF /* main.m in Sources */,
+				8B8428811E309A2100D754AF /* GameUtils.m in Sources */,
 				8B84287D1E308F4600D754AF /* TurnLog.m in Sources */,
 				8B8428791E308F4600D754AF /* GameConfig.m in Sources */,
 				8B84287C1E308F4600D754AF /* GameLog.m in Sources */,

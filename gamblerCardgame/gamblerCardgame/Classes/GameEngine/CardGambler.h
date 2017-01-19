@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GameUtils.h"
+
 @interface CardGambler : NSObject
 
 @property (nonatomic) BOOL isSuper;
@@ -21,8 +23,8 @@
 @property (nonatomic) int superPayoutValue;
 @property (nonatomic) int superCardValueGranted;
 
-- (void)resetToNormal;
-- (void)setToSuper;
+- (GameActionStatus)resetToNormal;
+- (GameActionStatus)setToSuper;
 
 - (int)cardWinningNumber;
 - (int)cardPayoutValue;

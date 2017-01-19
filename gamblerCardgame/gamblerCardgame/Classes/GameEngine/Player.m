@@ -22,7 +22,7 @@
     return 0; // TODO
 }
 
-- (void)setCardToSuperWithValue:(int)winningNumber {
+- (GameActionStatus)setCardToSuperWithValue:(int)winningNumber {
     // TODO
 }
 

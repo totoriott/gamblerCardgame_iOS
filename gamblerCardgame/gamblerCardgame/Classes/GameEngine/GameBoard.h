@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "CardGambler.h"
+#import "GameUtils.h"
 
 @interface GameBoard : NSObject
 
@@ -18,6 +19,6 @@
 - (CardGambler*)buyCardWithNumber:(int)winningNumber;
 
 - (void)fumbleMoneyAdd:(int)amount;
-- (void)fumbleMoneyRemove:(int)amount;
+- (GameActionStatus)fumbleMoneyRemove:(int)amount;
 
 @end

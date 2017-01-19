@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "CardGambler.h"
+#import "GameUtils.h"
 
 @interface Player : NSObject
 
@@ -20,7 +21,7 @@
 - (void)gainMoney:(int)amount;
 - (int)payoffAllCardsWithValue:(int)winningNumber;
 
-- (void)setCardToSuperWithValue:(int)winningNumber;
+- (GameActionStatus)setCardToSuperWithValue:(int)winningNumber;
 - (void)addCardGambler:(CardGambler*)cardGambler;
 
 @end
