@@ -15,11 +15,16 @@
 }
 
 - (void)fumbleMoneyAdd:(int)amount {
-    return; // TODO
+    _fumbleMoneyTotal += amount;
 }
 
 - (GameActionStatus)fumbleMoneyRemove:(int)amount {
-    return ACTION_SUCCEED; // TODO
+    if (_fumbleMoneyTotal < amount) {
+        return ACTION_FAIL;
+    }
+    
+    _fumbleMoneyTotal -= amount;
+    return ACTION_SUCCEED;
 }
 
 @end

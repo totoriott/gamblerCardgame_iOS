@@ -11,23 +11,27 @@
 @implementation CardGambler
 
 - (GameActionStatus)resetToNormal {
-    return ACTION_SUCCEED; // TODO
+    _isSuper = NO;
+    
+    return ACTION_SUCCEED;
 }
 
 - (GameActionStatus)setToSuper {
-    return ACTION_SUCCEED; // TODO
+    _isSuper = YES;
+    
+    return ACTION_SUCCEED;
 }
 
 - (int)cardWinningNumber {
-    return 0; // TODO
+    return _isSuper ? _superWinningNumber : _winningNumber;
 }
 
 - (int)cardPayoutValue {
-    return 0; // TODO
+    return _isSuper ? _superPayoutValue : _payoutValue;
 }
 
 - (int)cardCardValueGranted {
-    return 0; // TODO
+    return _isSuper ? _cardValueGranted : _superCardValueGranted;
 }
 
 @end

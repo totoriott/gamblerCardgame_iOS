@@ -14,8 +14,14 @@
     return @[@0, @1]; // TODO
 }
 
-- (void)gainMoney:(int)amount {
-    // TODO
+- (GameActionStatus)gainMoney:(int)amount {
+    // you can't go negative with money
+    if (amount < 0 && _money + amount < 0) {
+        amount = -1 * _money;
+    }
+    
+    _money += amount;
+    return ACTION_SUCCEED;
 }
 
 - (int)payoffAllCardsWithValue:(int)winningNumber {

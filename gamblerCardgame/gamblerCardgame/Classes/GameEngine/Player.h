@@ -18,7 +18,7 @@
 
 - (NSArray<NSNumber*>*)availableLuckCards;
 
-- (void)gainMoney:(int)amount;
+- (GameActionStatus)gainMoney:(int)amount;
 - (int)payoffAllCardsWithValue:(int)winningNumber;
 
 - (GameActionStatus)setCardToSuperWithValue:(int)winningNumber;

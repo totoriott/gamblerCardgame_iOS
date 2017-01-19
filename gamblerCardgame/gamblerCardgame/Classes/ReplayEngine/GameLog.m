@@ -11,11 +11,11 @@
 @implementation GameLog
 
 - (TurnLog*)mostRecentTurn {
-    return nil;
+    return nil; // TODO
 }
 
 - (void)startNewTurn {
-    return;
+    return; // TODO
 }
 
 @end
