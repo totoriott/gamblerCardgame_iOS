@@ -10,4 +10,6 @@
 
 @interface GameLog : NSObject
 
+// TODO: whatever
+
 @end

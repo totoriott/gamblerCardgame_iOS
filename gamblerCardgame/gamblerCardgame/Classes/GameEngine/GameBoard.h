@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CardGambler.h"
+
 @interface GameBoard : NSObject
+
+@property (nonatomic) int fumbleMoneyTotal;
+@property (nonatomic, weak) NSMutableArray<CardGambler*>* cardsForSale; // TODO: consider refactoring how this is stored
 
 @end

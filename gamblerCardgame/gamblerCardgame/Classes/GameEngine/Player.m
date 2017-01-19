@@ -10,4 +10,8 @@
 
 @implementation Player
 
+- (NSArray<NSNumber*>*)availableLuckCards {
+    return @[@0, @1]; // TODO
+}
+
 @end

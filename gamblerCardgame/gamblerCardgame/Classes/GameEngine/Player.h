@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CardGambler.h"
+
 @interface Player : NSObject
+
+@property (nonatomic, weak) NSMutableArray<CardGambler*>* cardGamblers;
+@property (nonatomic) int money;
+
+- (NSArray<NSNumber*>*)availableLuckCards;
 
 @end
