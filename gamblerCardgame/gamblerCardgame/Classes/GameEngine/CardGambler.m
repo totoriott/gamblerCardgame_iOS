@@ -11,11 +11,11 @@
 @implementation CardGambler
 
 - (GameActionStatus)resetToNormal {
-    // TODO
+    return ACTION_SUCCEED; // TODO
 }
 
 - (GameActionStatus)setToSuper {
-    // TODO
+    return ACTION_SUCCEED; // TODO
 }
 
 - (int)cardWinningNumber {

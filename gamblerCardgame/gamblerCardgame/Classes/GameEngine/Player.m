@@ -23,7 +23,7 @@
 }
 
 - (GameActionStatus)setCardToSuperWithValue:(int)winningNumber {
-    // TODO
+    return ACTION_SUCCEED; // TODO
 }
 
 - (void)addCardGambler:(CardGambler*)cardGambler {

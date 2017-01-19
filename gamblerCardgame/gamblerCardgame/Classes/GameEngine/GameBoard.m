@@ -18,8 +18,8 @@
     return; // TODO
 }
 
-- (void)fumbleMoneyRemove:(int)amount {
-    return; // TODO
+- (GameActionStatus)fumbleMoneyRemove:(int)amount {
+    return ACTION_SUCCEED; // TODO
 }
 
 @end
