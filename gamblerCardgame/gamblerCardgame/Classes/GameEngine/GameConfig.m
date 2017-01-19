@@ -17,6 +17,8 @@
         _moneyStart = @[@1, @1, @2, @2];
         _moneyGoal = 15;
         
+        _costOfAdjust = 1;
+        
        // count, win, superWin, cost, cardGet, cardGet2,  winValue, superWinValue
         _cardConfigs = @[
             @[@5, @1, @1, @1, @0, @0, @3, @5],

@@ -28,6 +28,7 @@
 - (void)initNewGameWithPlayers:(int)playerCount;
 - (void)runGame;
 
+- (BOOL)isGameOver;
 - (BOOL)hasFirstPlayerPlayedLuck;
 - (BOOL)haveAllPlayersPlayedLuck;
 - (BOOL)hasFirstPlayerChosenAdjustAction;

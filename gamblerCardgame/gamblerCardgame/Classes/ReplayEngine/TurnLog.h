@@ -12,7 +12,7 @@
 
 #define TURNLOG_ACTION_NOT_CHOSEN -99
 
-@property (nonatomic, weak) NSMutableArray<NSNumber*>* luckPlay;
+@property (nonatomic, strong) NSMutableArray<NSNumber*>* luckPlay;
 @property (nonatomic) int luckAdjust;
 @property (nonatomic) int endTurnAction;
 @property (nonatomic) int endTurnCardSelected;
@@ -29,5 +29,7 @@
 - (int)getLuckAdjust;
 - (int)getEndTurnAction;
 - (int)getEndTurnCardSelected;
+
+- (int)getTotalLuck;
 
 @end

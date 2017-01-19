@@ -34,7 +34,11 @@
         }
     }
     
-    // TODO - luck adjust, end turn action, card selected, etc
+    if (_luckAdjust != TURNLOG_ACTION_NOT_CHOSEN) {
+        statusString = [NSString stringWithFormat:@"%@ + %d", statusString, _luckAdjust];
+    }
+    
+    // TODO - end turn action, card selected, etc
     
     return statusString; // TODO
 }
@@ -66,6 +70,22 @@
 
 - (int)getEndTurnCardSelected {
     return _endTurnCardSelected;
+}
+
+- (int)getTotalLuck {
+    int totalLuck = 0;
+    
+    for (NSNumber* play in _luckPlay) {
+        if ([play intValue] != TURNLOG_ACTION_NOT_CHOSEN) {
+            totalLuck += [play intValue];
+        }
+    }
+    
+    if (_luckAdjust != TURNLOG_ACTION_NOT_CHOSEN) {
+        totalLuck += _luckAdjust;
+    }
+    
+    return totalLuck;
 }
 
 @end

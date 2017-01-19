@@ -32,7 +32,6 @@
 }
 
 - (void)runGame {
-    [self printGameStatus];
     // select initial cards
     // TODO: for simplicity sake, we are just giving everyone random cards for now
     for (Player* player in _players) {
@@ -62,16 +61,70 @@
         [player addCardGambler:card2];
     }
     
-    [self printGameStatus];
+    [_gameLog startNewTurn];
+    
+    while (![self isGameOver]) {
+        // TODO: people select luck
+        TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+        for (Player* player in _players) {
+            NSArray* luckCards = [player availableLuckCards];
+            
+            int randomIndex = (arc4random() % [luckCards count]);
+            
+            [currentTurn logLuckPlay:[luckCards[randomIndex] intValue] forPlayer:player.playerId];
+        }
+
+        // TODO: P selects luck adjust
+        Player* curPlayer = [self getCurPlayer];
+        if (curPlayer.money >= _gameConfig.costOfAdjust) {
+            int randomChance = (arc4random() % 8);
+            switch (randomChance) {
+                case 0:
+                    [currentTurn logLuckAdjust:1];
+                    break;
+                    
+                case 1:
+                    [currentTurn logLuckAdjust:-1];
+                    break;
+                    
+                default:
+                    [currentTurn logLuckAdjust:0];
+                    break;
+            }
+        }
+        
+        [self processGamble];
+        
+        // TODO: P selects end-turn action
+        
+        [self processEndTurn];
+        [self printGameStatus];
+    }
+}
+
+- (Player*)getCurPlayer {
+    return _players[_currentPlayerIndex];
+}
+
+- (BOOL)isGameOver {
+    for (Player* player in _players) {
+        if (player.money >= _gameConfig.moneyGoal) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (void)printGameStatus {
-    NSLog(@"Turn %d", (int)[[_gameLog turns] count]);
+    NSLog(@"Turn %d - Active P%d", (int)[[_gameLog turns] count], _currentPlayerIndex);
     NSLog(@"%@", [_gameBoard boardStatusString]);
     
     for (int i = 0; i < [_players count]; i++) {
         NSLog(@"%@", [_players[i] playerStatusString]);
     }
+    
+    NSLog(@"");
 }
 
 - (BOOL)hasFirstPlayerPlayedLuck {
@@ -101,11 +154,36 @@
 }
 
 - (void)processGamble {
-    return; // TODO
+    Player* curPlayer = [self getCurPlayer];
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    NSLog(@"%@", [currentTurn turnLogStatus]);
+    
+    // process adjusting
+    if ([currentTurn getLuckAdjust] != 0) {
+        [curPlayer gainMoney:-1 * _gameConfig.costOfAdjust];
+    }
+    
+    // pay off all winners
+    int totalLuck = [currentTurn getTotalLuck];
+    BOOL someoneWon = NO;
+    for (Player* player in _players) {
+        int amountWon = [player payoffAllCardsWithValue:totalLuck];
+        
+        if (amountWon > 0) {
+            someoneWon = YES;
+        }
+    }
+    
+    // fumble
+    if (!someoneWon) {
+        // TODO: fumble
+    }
 }
 
 - (void)processEndTurn {
-    return; // TODO
+    // TODO: end turn action stuff
+    
+    [_gameLog startNewTurn];
 }
 
 @end

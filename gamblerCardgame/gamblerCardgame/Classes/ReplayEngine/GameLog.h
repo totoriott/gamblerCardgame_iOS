@@ -13,7 +13,7 @@
 @interface GameLog : NSObject
 
 @property (nonatomic) int playerCount;
-@property (nonatomic, weak) NSMutableArray<TurnLog*>* turns;
+@property (nonatomic, strong) NSMutableArray<TurnLog*>* turns;
 
 - (instancetype)initWithPlayerCount:(int)playerCount;
 

@@ -50,7 +50,21 @@
 }
 
 - (int)payoffAllCardsWithValue:(int)winningNumber {
-    return 0; // TODO
+    int winnings = 0;
+    
+    for (CardGambler* card in _cardGamblers) {
+        if ([card cardWinningNumber] == winningNumber) {
+            // this card paid off!
+            winnings += [card cardPayoutValue];
+            
+            // reset it to normal (if it was super)
+            [card resetToNormal];
+        }
+    }
+    
+    [self gainMoney:winnings];
+    
+    return winnings; 
 }
 
 - (GameActionStatus)setCardToSuperWithValue:(int)winningNumber {
