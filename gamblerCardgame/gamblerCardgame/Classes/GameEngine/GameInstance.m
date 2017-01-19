@@ -19,7 +19,7 @@
     _players = [NSMutableArray array];
     
     for (int i = 0; i < playerCount; i++) {
-        Player* newPlayer = [[Player alloc] init];
+        Player* newPlayer = [[Player alloc] initWithId:i];
         
         int startMoney = [_gameConfig.moneyStart[i] intValue];
         [newPlayer gainMoney:startMoney];
@@ -32,7 +32,15 @@
 }
 
 - (void)runGame {
-    return; // TODO
+    [self printGameStatus];
+}
+
+- (void)printGameStatus {
+    for (int i = 0; i < [_players count]; i++) {
+        NSLog(@"%@", [_players[i] playerStatusString]);
+    }
+    
+    // TODO: print more game stuff
 }
 
 - (BOOL)hasFirstPlayerPlayedLuck {

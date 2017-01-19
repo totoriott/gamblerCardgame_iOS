@@ -10,12 +10,17 @@
 
 @implementation Player
 
-- (instancetype)init {
+- (instancetype)initWithId:(int)playerId {
     if (self = [super init]) {
+        _playerId = playerId;
         _money = 0;
         _cardGamblers = [NSMutableArray array];
     }
     return self;
+}
+
+- (NSString*)playerStatusString {
+    return [NSString stringWithFormat:@"P%d - $%d", _playerId, _money]; // TODO
 }
 
 - (NSArray<NSNumber*>*)availableLuckCards {

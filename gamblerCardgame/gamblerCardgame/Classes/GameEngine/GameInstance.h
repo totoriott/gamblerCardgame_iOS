@@ -17,7 +17,7 @@
 
 // TODO: serialize / deserialize
 
-@property (nonatomic, weak) NSMutableArray<Player*>* players;
+@property (nonatomic, strong) NSMutableArray<Player*>* players;
 @property (nonatomic) int currentPlayerIndex;
 @property (nonatomic) int fumbleMoneyTotal;
 
