@@ -19,6 +19,8 @@
 
 - (instancetype)initWithPlayerCount:(int)playerCount;
 
+- (NSString*)turnLogStatus;
+
 - (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId;
 - (void)logLuckAdjust:(int)adjust;
 - (void)logEndTurnAction:(int)action cardSelected:(int)cardNumber;

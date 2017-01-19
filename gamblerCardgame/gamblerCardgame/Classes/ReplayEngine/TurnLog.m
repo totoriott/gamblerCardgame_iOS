@@ -24,6 +24,21 @@
     return self;
 }
 
+- (NSString *)turnLogStatus {
+    NSString* statusString = @"";
+    for (NSNumber* play in _luckPlay) {
+        if ([play intValue] == TURNLOG_ACTION_NOT_CHOSEN) {
+            statusString = [NSString stringWithFormat:@"%@?", statusString];
+        } else {
+            statusString = [NSString stringWithFormat:@"%@%d", statusString, [play intValue]];
+        }
+    }
+    
+    // TODO - luck adjust, end turn action, card selected, etc
+    
+    return statusString; // TODO
+}
+
 - (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId {
     _luckPlay[playerId] = [NSNumber numberWithInt:luckValue];
 }

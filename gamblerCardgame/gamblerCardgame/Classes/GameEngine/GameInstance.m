@@ -34,10 +34,29 @@
 - (void)runGame {
     [self printGameStatus];
     // select initial cards
-    // TODO: for simplicity sake, we are just giving everyone 1 / 2 for now
+    // TODO: for simplicity sake, we are just giving everyone random cards for now
     for (Player* player in _players) {
-        CardGambler* card1 = [_gameBoard buyCardWithNumber:1];
-        CardGambler* card2 = [_gameBoard buyCardWithNumber:2];
+        int value1, value2;
+        int randomIndex = (arc4random() % 3);
+        switch (randomIndex) {
+            case 0:
+                value1 = 1;
+                value2 = 2;
+                break;
+                
+            case 1:
+                value1 = 1;
+                value2 = 3;
+                break;
+                
+            case 2: default:
+                value1 = 2;
+                value2 = 3;
+                break;
+        }
+        
+        CardGambler* card1 = [_gameBoard buyCardWithNumber:value1];
+        CardGambler* card2 = [_gameBoard buyCardWithNumber:value2];
         
         [player addCardGambler:card1];
         [player addCardGambler:card2];
