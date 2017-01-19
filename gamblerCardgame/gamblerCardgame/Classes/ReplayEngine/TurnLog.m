@@ -10,16 +10,35 @@
 
 @implementation TurnLog
 
+// TODO: initialize properly
+
 - (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId {
-    return; // TODO
+    _luckPlay[playerId] = [NSNumber numberWithInt:luckValue];
 }
 
 - (void)logLuckAdjust:(int)adjust {
-    return; // TODO
+    _luckAdjust = adjust;
 }
 
 - (void)logEndTurnAction:(int)action cardSelected:(int)cardNumber {
-    return; // TODO
+    _endTurnAction = action;
+    _endTurnCardSelected = cardNumber;
+}
+
+- (int)getLuckPlayForPlayer:(int)playerId {
+    return [_luckPlay[playerId] intValue]; // TODO bounds check
+}
+
+- (int)getLuckAdjust {
+    return _luckAdjust;
+}
+
+- (int)getEndTurnAction {
+    return _endTurnAction;
+}
+
+- (int)getEndTurnCardSelected {
+    return _endTurnCardSelected;
 }
 
 @end

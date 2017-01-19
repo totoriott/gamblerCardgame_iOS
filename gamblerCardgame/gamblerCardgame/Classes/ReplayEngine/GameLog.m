@@ -10,8 +10,8 @@
 
 @implementation GameLog
 
-- (TurnLog*)mostRecentTurn {
-    return nil; // TODO
+- (TurnLog*)getMostRecentTurn {
+    return [_turns lastObject];
 }
 
 - (void)startNewTurn {

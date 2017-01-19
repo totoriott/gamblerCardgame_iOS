@@ -15,19 +15,29 @@
 }
 
 - (BOOL)hasFirstPlayerPlayedLuck {
-    return NO; // TODO
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    return [currentTurn getLuckPlayForPlayer:_currentPlayerIndex] != TURNLOG_ACTION_NOT_CHOSEN;
 }
 
 - (BOOL)haveAllPlayersPlayedLuck {
-    return NO; // TODO
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    for (int i = 0; i < [_players count]; i++) {
+        if ([currentTurn getLuckPlayForPlayer:i] == TURNLOG_ACTION_NOT_CHOSEN) {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 - (BOOL)hasFirstPlayerChosenAdjustAction {
-    return NO; // TODO
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    return [currentTurn getLuckAdjust] != TURNLOG_ACTION_NOT_CHOSEN;
 }
 
 - (BOOL)hasFirstPlayerChosenEndTurnAction {
-    return NO; // TODO
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    return [currentTurn getEndTurnAction] != TURNLOG_ACTION_NOT_CHOSEN;
 }
 
 - (void)processGamble {
