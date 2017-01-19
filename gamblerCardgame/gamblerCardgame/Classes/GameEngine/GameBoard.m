@@ -39,7 +39,16 @@
 }
 
 - (CardGambler*)buyCardWithNumber:(int)winningNumber {
-    return nil; // TODO
+    for (CardGambler* card in _cardsForSale) {
+        if ([card cardWinningNumber] == winningNumber) {
+            CardGambler* cardToReturn = card;
+            [_cardsForSale removeObject:card];
+            
+            return cardToReturn;
+        }
+    }
+    
+    return nil; // card not found
 }
 
 - (void)fumbleMoneyAdd:(int)amount {

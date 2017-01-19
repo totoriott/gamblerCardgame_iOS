@@ -14,7 +14,7 @@
 @interface Player : NSObject
 
 @property (nonatomic) int playerId;
-@property (nonatomic, weak) NSMutableArray<CardGambler*>* cardGamblers;
+@property (nonatomic, strong) NSMutableArray<CardGambler*>* cardGamblers;
 @property (nonatomic) int money;
 
 - (instancetype)initWithId:(int)playerId;

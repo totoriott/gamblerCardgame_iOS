@@ -33,6 +33,17 @@
 
 - (void)runGame {
     [self printGameStatus];
+    // select initial cards
+    // TODO: for simplicity sake, we are just giving everyone 1 / 2 for now
+    for (Player* player in _players) {
+        CardGambler* card1 = [_gameBoard buyCardWithNumber:1];
+        CardGambler* card2 = [_gameBoard buyCardWithNumber:2];
+        
+        [player addCardGambler:card1];
+        [player addCardGambler:card2];
+    }
+    
+    [self printGameStatus];
 }
 
 - (void)printGameStatus {

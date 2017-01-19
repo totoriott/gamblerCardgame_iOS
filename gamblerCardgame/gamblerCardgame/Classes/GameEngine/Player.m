@@ -20,7 +20,19 @@
 }
 
 - (NSString*)playerStatusString {
-    return [NSString stringWithFormat:@"P%d - $%d", _playerId, _money]; // TODO
+    NSString* statusString = [NSString stringWithFormat:@"P%d - $%d {", _playerId, _money];
+    
+    for (NSNumber* luckCard in [self availableLuckCards]) {
+        statusString = [NSString stringWithFormat:@"%@%d", statusString, [luckCard intValue]];
+    }
+    
+    statusString = [NSString stringWithFormat:@"%@} ", statusString];
+    
+    for (CardGambler* card in _cardGamblers) {
+        statusString = [NSString stringWithFormat:@"%@[%d]", statusString, [card cardWinningNumber]];
+    }
+    
+    return statusString; // TODO
 }
 
 - (NSArray<NSNumber*>*)availableLuckCards {
@@ -46,7 +58,7 @@
 }
 
 - (void)addCardGambler:(CardGambler*)cardGambler {
-    // TODO
+    [_cardGamblers addObject:cardGambler];
 }
 
 
