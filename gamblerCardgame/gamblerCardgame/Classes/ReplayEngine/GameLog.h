@@ -15,6 +15,8 @@
 @property (nonatomic) int playerCount;
 @property (nonatomic, weak) NSMutableArray<TurnLog*>* turns;
 
+- (instancetype)initWithPlayerCount:(int)playerCount;
+
 - (TurnLog*)getMostRecentTurn;
 
 - (void)startNewTurn;

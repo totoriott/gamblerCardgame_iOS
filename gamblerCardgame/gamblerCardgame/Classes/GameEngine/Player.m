@@ -10,6 +10,14 @@
 
 @implementation Player
 
+- (instancetype)init {
+    if (self = [super init]) {
+        _money = 0;
+        _cardGamblers = [NSMutableArray array];
+    }
+    return self;
+}
+
 - (NSArray<NSNumber*>*)availableLuckCards {
     return @[@0, @1]; // TODO
 }

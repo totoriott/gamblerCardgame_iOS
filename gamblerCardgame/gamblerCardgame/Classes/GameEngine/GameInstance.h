@@ -21,10 +21,11 @@
 @property (nonatomic) int currentPlayerIndex;
 @property (nonatomic) int fumbleMoneyTotal;
 
-@property (nonatomic, weak) GameConfig* gameConfig;
-@property (nonatomic, weak) GameLog* gameLog;
-@property (nonatomic, weak) GameBoard* gameBoard;
+@property (nonatomic, strong) GameConfig* gameConfig;
+@property (nonatomic, strong) GameLog* gameLog;
+@property (nonatomic, strong) GameBoard* gameBoard;
 
+- (void)initNewGameWithPlayers:(int)playerCount;
 - (void)runGame;
 
 - (BOOL)hasFirstPlayerPlayedLuck;

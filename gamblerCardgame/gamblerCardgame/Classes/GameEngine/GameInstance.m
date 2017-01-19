@@ -10,6 +10,27 @@
 
 @implementation GameInstance
 
+- (void)initNewGameWithPlayers:(int)playerCount {
+    _gameConfig = [[GameConfig alloc] init];
+    _gameLog = [[GameLog alloc] initWithPlayerCount:playerCount];
+    
+    // TODO: init game board
+    
+    _players = [NSMutableArray array];
+    
+    for (int i = 0; i < playerCount; i++) {
+        Player* newPlayer = [[Player alloc] init];
+        
+        int startMoney = [_gameConfig.moneyStart[i] intValue];
+        [newPlayer gainMoney:startMoney];
+        
+        [_players addObject:newPlayer];
+    }
+
+    _currentPlayerIndex = 0;
+    _fumbleMoneyTotal = 0;
+}
+
 - (void)runGame {
     return; // TODO
 }

@@ -10,4 +10,16 @@
 
 @implementation GameConfig
 
+- (instancetype)init {
+    if (self = [super init]) {
+        // TODO: don't hardcode these later
+        
+        _moneyStart = @[@1, @1, @2, @2];
+        _moneyGoal = 15;
+        
+        _cardConfigs = nil; // TODO: oh boy
+    }
+    return self;
+}
+
 @end
