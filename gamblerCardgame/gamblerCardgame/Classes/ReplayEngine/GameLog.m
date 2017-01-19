@@ -10,12 +10,21 @@
 
 @implementation GameLog
 
+- (instancetype)initWithPlayerCount:(int)playerCount {
+    if (self = [super init]) {
+        _playerCount = playerCount;
+        _turns = [NSMutableArray array];
+    }
+    return self;
+}
+
 - (TurnLog*)getMostRecentTurn {
     return [_turns lastObject];
 }
 
 - (void)startNewTurn {
-    return; // TODO
+    TurnLog* newTurn = [[TurnLog alloc] initWithPlayerCount:_playerCount];
+    [_turns addObject:newTurn];
 }
 
 @end

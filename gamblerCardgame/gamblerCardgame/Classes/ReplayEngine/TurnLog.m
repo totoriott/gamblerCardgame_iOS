@@ -10,7 +10,19 @@
 
 @implementation TurnLog
 
-// TODO: initialize properly
+- (instancetype)initWithPlayerCount:(int)playerCount {
+    if (self = [super init]) {
+        _luckPlay = [NSMutableArray array];
+        for (int i = 0; i < playerCount; i++) {
+            [_luckPlay addObject:[NSNumber numberWithInt:TURNLOG_ACTION_NOT_CHOSEN]];
+        }
+        
+        _luckAdjust = TURNLOG_ACTION_NOT_CHOSEN;
+        _endTurnAction = TURNLOG_ACTION_NOT_CHOSEN;
+        _endTurnCardSelected = TURNLOG_ACTION_NOT_CHOSEN;
+    }
+    return self;
+}
 
 - (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId {
     _luckPlay[playerId] = [NSNumber numberWithInt:luckValue];
