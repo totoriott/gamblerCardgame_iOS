@@ -29,7 +29,11 @@
     statusString = [NSString stringWithFormat:@"%@} ", statusString];
     
     for (CardGambler* card in _cardGamblers) {
-        statusString = [NSString stringWithFormat:@"%@[%d]", statusString, [card cardWinningNumber]];
+        if (card.isSuper) {
+            statusString = [NSString stringWithFormat:@"%@[%d*]", statusString, [card cardWinningNumber]];
+        } else {
+            statusString = [NSString stringWithFormat:@"%@[%d]", statusString, [card cardWinningNumber]];
+        }
     }
     
     return statusString; // TODO
@@ -68,7 +72,14 @@
 }
 
 - (GameActionStatus)setCardToSuperWithValue:(int)winningNumber {
-    return ACTION_SUCCEED; // TODO
+    for (CardGambler* card in _cardGamblers) {
+        if ([card cardWinningNumber] == winningNumber && !card.isSuper) {
+            [card setToSuper];
+            return ACTION_SUCCEED;
+        }
+    }
+
+    return ACTION_FAIL;
 }
 
 - (void)addCardGambler:(CardGambler*)cardGambler {

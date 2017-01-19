@@ -206,6 +206,12 @@
 
 - (void)processEndTurn {
     // TODO: end turn action stuff
+    [[self getCurPlayer] setCardToSuperWithValue:1];
+    
+    _currentPlayerIndex += 1;
+    if (_currentPlayerIndex >= [_players count]) {
+        _currentPlayerIndex = 0;
+    }
     
     [_gameLog startNewTurn];
 }
