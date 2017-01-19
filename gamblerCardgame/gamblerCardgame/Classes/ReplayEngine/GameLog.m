@@ -15,7 +15,7 @@
 }
 
 - (void)startNewTurn {
-    return nil;
+    return;
 }
 
 @end
