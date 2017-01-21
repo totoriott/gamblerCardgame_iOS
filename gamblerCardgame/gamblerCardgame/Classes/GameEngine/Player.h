@@ -15,6 +15,7 @@
 
 @property (nonatomic) int playerId;
 @property (nonatomic, strong) NSMutableArray<CardGambler*>* cardGamblers;
+@property (nonatomic, strong) NSMutableArray<NSNumber*>* cardNumbers;
 @property (nonatomic) int money;
 
 - (instancetype)initWithId:(int)playerId;

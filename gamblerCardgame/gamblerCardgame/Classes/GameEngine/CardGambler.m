@@ -47,7 +47,7 @@
 }
 
 - (int)cardCardValueGranted {
-    return _isSuper ? _cardValueGranted : _superCardValueGranted;
+    return _isSuper ? _superCardValueGranted : _cardValueGranted;
 }
 
 @end

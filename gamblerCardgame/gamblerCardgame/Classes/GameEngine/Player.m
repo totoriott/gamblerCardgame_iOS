@@ -15,6 +15,11 @@
         _playerId = playerId;
         _money = 0;
         _cardGamblers = [NSMutableArray array];
+        
+        // TODO: maybe make it so you don't have 0/1 by default?
+        _cardNumbers = [NSMutableArray array];
+        [_cardNumbers addObject:@0];
+        [_cardNumbers addObject:@1];
     }
     return self;
 }
@@ -40,7 +45,7 @@
 }
 
 - (NSArray<NSNumber*>*)availableLuckCards {
-    return @[@0, @1]; // TODO
+    return _cardNumbers;
 }
 
 - (GameActionStatus)gainMoney:(int)amount {
@@ -75,6 +80,7 @@
     for (CardGambler* card in _cardGamblers) {
         if ([card cardWinningNumber] == winningNumber && !card.isSuper) {
             [card setToSuper];
+            [self tryToEarnCardFromGambler:card];
             return ACTION_SUCCEED;
         }
     }
@@ -84,7 +90,21 @@
 
 - (void)addCardGambler:(CardGambler*)cardGambler {
     [_cardGamblers addObject:cardGambler];
+    [self tryToEarnCardFromGambler:cardGambler];
 }
 
+- (void)tryToEarnCardFromGambler:(CardGambler*)card {
+    BOOL newNumber = YES;
+    
+    for (NSNumber* number in _cardNumbers) {
+        if ([card cardCardValueGranted] == [number intValue]) {
+            newNumber = NO;
+        }
+    }
+    
+    if (newNumber) {
+        [_cardNumbers addObject:[NSNumber numberWithInt:[card cardCardValueGranted]]];
+    }
+}
 
 @end
