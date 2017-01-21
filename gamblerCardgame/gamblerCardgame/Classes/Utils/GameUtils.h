@@ -13,6 +13,12 @@ typedef NS_ENUM(NSUInteger, GameActionStatus) {
     ACTION_SUCCEED
 };
 
+typedef NS_ENUM(NSUInteger, EndTurnAction) {
+    ENDTURN_NOT_SELECTED,
+    ENDTURN_SUPER,
+    ENDTURN_BUY
+};
+
 @interface GameUtils : NSObject
 
 @end

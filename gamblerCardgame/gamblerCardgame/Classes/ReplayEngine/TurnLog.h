@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GameUtils.h"
+
 @interface TurnLog : NSObject
 
 #define TURNLOG_ACTION_NOT_CHOSEN -99
@@ -15,7 +17,7 @@
 @property (nonatomic, strong) NSMutableArray<NSNumber*>* luckPlay;
 @property (nonatomic) int luckAdjust;
 @property (nonatomic) int endTurnAction;
-@property (nonatomic) int endTurnCardSelected;
+@property (nonatomic) EndTurnAction endTurnCardSelected;
 
 - (instancetype)initWithPlayerCount:(int)playerCount;
 
@@ -23,11 +25,11 @@
 
 - (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId;
 - (void)logLuckAdjust:(int)adjust;
-- (void)logEndTurnAction:(int)action cardSelected:(int)cardNumber;
+- (void)logEndTurnAction:(EndTurnAction)action cardSelected:(int)cardNumber;
 
 - (int)getLuckPlayForPlayer:(int)playerId;
 - (int)getLuckAdjust;
-- (int)getEndTurnAction;
+- (EndTurnAction)getEndTurnAction;
 - (int)getEndTurnCardSelected;
 
 - (int)getTotalLuck;

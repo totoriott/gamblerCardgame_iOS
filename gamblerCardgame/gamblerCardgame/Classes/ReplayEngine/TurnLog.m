@@ -18,7 +18,7 @@
         }
         
         _luckAdjust = TURNLOG_ACTION_NOT_CHOSEN;
-        _endTurnAction = TURNLOG_ACTION_NOT_CHOSEN;
+        _endTurnAction = ENDTURN_NOT_SELECTED;
         _endTurnCardSelected = TURNLOG_ACTION_NOT_CHOSEN;
     }
     return self;
@@ -51,7 +51,7 @@
     _luckAdjust = adjust;
 }
 
-- (void)logEndTurnAction:(int)action cardSelected:(int)cardNumber {
+- (void)logEndTurnAction:(EndTurnAction)action cardSelected:(int)cardNumber {
     _endTurnAction = action;
     _endTurnCardSelected = cardNumber;
 }
@@ -64,7 +64,7 @@
     return _luckAdjust;
 }
 
-- (int)getEndTurnAction {
+- (EndTurnAction)getEndTurnAction {
     return _endTurnAction;
 }
 

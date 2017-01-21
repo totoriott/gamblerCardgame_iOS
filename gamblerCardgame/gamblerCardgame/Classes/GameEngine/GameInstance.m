@@ -96,6 +96,14 @@
         [self processGamble];
         
         // TODO: P selects end-turn action
+        NSArray<NSNumber*>* cardsCanBuy = [_gameBoard cardNumbersPurchasableWithMoneyAmount:curPlayer.money];
+        if ([cardsCanBuy count] > 0) {
+            int randomIndex = (arc4random() % [cardsCanBuy count]);
+            [currentTurn logEndTurnAction:ENDTURN_BUY cardSelected:[cardsCanBuy[randomIndex] intValue]];
+        } else {
+            int randomIndex = (arc4random() % [curPlayer.cardGamblers count]);
+            [currentTurn logEndTurnAction:ENDTURN_SUPER cardSelected:[curPlayer.cardGamblers[randomIndex] cardWinningNumber]];
+        }
         
         [self processEndTurn];
         [self printGameStatus];
@@ -150,7 +158,7 @@
 
 - (BOOL)hasFirstPlayerChosenEndTurnAction {
     TurnLog* currentTurn = [_gameLog getMostRecentTurn];
-    return [currentTurn getEndTurnAction] != TURNLOG_ACTION_NOT_CHOSEN;
+    return [currentTurn getEndTurnAction] != ENDTURN_NOT_SELECTED;
 }
 
 - (void)processGamble {
@@ -205,9 +213,27 @@
 }
 
 - (void)processEndTurn {
-    // TODO: end turn action stuff
-    [[self getCurPlayer] setCardToSuperWithValue:1];
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    CardGambler* cardBought;
+    Player* curPlayer = [self getCurPlayer];
     
+    switch ([currentTurn getEndTurnAction]) {
+        case ENDTURN_BUY:
+            cardBought = [_gameBoard buyCardWithNumber:[currentTurn getEndTurnCardSelected]];
+            if (cardBought && curPlayer.money >= cardBought.cost) {
+                [curPlayer gainMoney:-1 * cardBought.cost];
+                [curPlayer addCardGambler:cardBought];
+            }
+            break;
+            
+        case ENDTURN_SUPER:
+            [curPlayer setCardToSuperWithValue:[currentTurn getEndTurnCardSelected]];
+            break;
+            
+        case ENDTURN_NOT_SELECTED:
+            break;
+    }
+
     _currentPlayerIndex += 1;
     if (_currentPlayerIndex >= [_players count]) {
         _currentPlayerIndex = 0;

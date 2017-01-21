@@ -25,4 +25,6 @@
 - (void)fumbleMoneyAdd:(int)amount;
 - (GameActionStatus)fumbleMoneyRemove:(int)amount;
 
+- (NSArray<NSNumber*>*)cardNumbersPurchasableWithMoneyAmount:(int)amount;
+
 @end

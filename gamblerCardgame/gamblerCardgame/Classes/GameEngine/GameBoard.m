@@ -64,4 +64,26 @@
     return ACTION_SUCCEED;
 }
 
+- (NSArray<NSNumber*> *)cardNumbersPurchasableWithMoneyAmount:(int)amount {
+    NSMutableArray<NSNumber*>* cardNumbers = [NSMutableArray array];
+    
+    for (CardGambler* card in _cardsForSale) {
+        if (card.cost <= amount) {
+            // TODO: refactor this to use a dictionary or something, c'mon
+            BOOL newNumber = YES;
+            for (NSNumber* number in cardNumbers) {
+                if ([number intValue] == [card cardWinningNumber]) {
+                    newNumber = NO;
+                }
+            }
+            
+            if (newNumber) {
+                 [cardNumbers addObject:[NSNumber numberWithInt:[card cardWinningNumber]]];
+            }
+        }
+    }
+    
+    return cardNumbers;
+}
+
 @end
