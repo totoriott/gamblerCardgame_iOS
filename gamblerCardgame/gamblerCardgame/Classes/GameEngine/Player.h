@@ -11,7 +11,7 @@
 #import "CardGambler.h"
 #import "GameUtils.h"
 
-@class GameInstance;
+@class GameInstance, AiModel;
 
 @interface Player : NSObject
 
@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray<CardGambler*>* cardGamblers;
 @property (nonatomic, strong) NSMutableArray<NSNumber*>* cardNumbers;
 @property (nonatomic) int money;
+@property (nonatomic, strong) AiModel* aiModel;
 
 - (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards;
 

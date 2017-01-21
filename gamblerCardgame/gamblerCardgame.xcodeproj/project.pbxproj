@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B0840AC1E33325F0094B5EA /* AiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0840AB1E33325F0094B5EA /* AiModel.m */; };
 		8B8428511E308F3200D754AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428501E308F3200D754AF /* main.m */; };
 		8B8428541E308F3200D754AF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428531E308F3200D754AF /* AppDelegate.m */; };
 		8B8428571E308F3200D754AF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428561E308F3200D754AF /* ViewController.m */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B0840AA1E33325F0094B5EA /* AiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AiModel.h; sourceTree = "<group>"; };
+		8B0840AB1E33325F0094B5EA /* AiModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AiModel.m; sourceTree = "<group>"; };
 		8B84284C1E308F3200D754AF /* gamblerCardgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gamblerCardgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B8428501E308F3200D754AF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8B8428521E308F3200D754AF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -63,6 +66,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B0840A91E33325F0094B5EA /* AiEngine */ = {
+			isa = PBXGroup;
+			children = (
+				8B0840AA1E33325F0094B5EA /* AiModel.h */,
+				8B0840AB1E33325F0094B5EA /* AiModel.m */,
+			);
+			path = AiEngine;
+			sourceTree = "<group>";
+		};
 		8B8428431E308F3200D754AF = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				8B84287E1E309A2100D754AF /* Utils */,
+				8B0840A91E33325F0094B5EA /* AiEngine */,
 				8B8428671E308F4600D754AF /* GameEngine */,
 				8B8428721E308F4600D754AF /* ReplayEngine */,
 			);
@@ -232,6 +245,7 @@
 				8B8428811E309A2100D754AF /* GameUtils.m in Sources */,
 				8B84287D1E308F4600D754AF /* TurnLog.m in Sources */,
 				8B8428791E308F4600D754AF /* GameConfig.m in Sources */,
+				8B0840AC1E33325F0094B5EA /* AiModel.m in Sources */,
 				8B84287C1E308F4600D754AF /* GameLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,6 +401,7 @@
 				8B8428651E308F3200D754AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

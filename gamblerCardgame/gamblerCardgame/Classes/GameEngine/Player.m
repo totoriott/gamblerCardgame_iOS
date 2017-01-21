@@ -8,6 +8,7 @@
 
 #import "Player.h"
 
+#import "AiModel.h"
 #import "GameInstance.h"
 
 @interface Player ()
@@ -26,6 +27,8 @@
         _cardGamblers = [NSMutableArray array];
         
         _cardNumbers = [defaultLuckCards mutableCopy];
+        
+        _aiModel = [[AiModel alloc] initWithPlayer:self]; // TODO: switch out AiModels
     }
     return self;
 }
@@ -159,37 +162,7 @@
 }
 
 - (void)performAiActions:(GameInstance *)game {
-    if (![game playerCanActDuringCurrentTurnState:_playerId]) {
-        return;
-    }
-    
-    BOOL isCurPlayer = _playerId == game.currentPlayerIndex;
-
-    switch (game.turnState) {
-        case TURN_STATE_SELECT_LEAD_LUCK:
-            [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLeadLuckCard:game]];
-            break;
-            
-        case TURN_STATE_SELECT_LUCK:
-            [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckCard:game]];
-            break;
-            
-        case TURN_STATE_SELECT_ADJUST_ACTION:
-            if (isCurPlayer) {
-                [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckAdjust:game]];
-            }
-            break;
-            
-        case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
-            if (isCurPlayer) {
-                NSArray<NSNumber*>* playerChoice = [self getEndTurnAction:game];
-                [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[playerChoice[0] intValue] choice2:[playerChoice[1] intValue]];
-            }
-            break;
-            
-        default:
-            break;
-    }
+    [self.aiModel performAiActions:game];
 }
 
 @end
