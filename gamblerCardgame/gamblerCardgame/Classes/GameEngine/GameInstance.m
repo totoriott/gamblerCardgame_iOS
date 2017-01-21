@@ -19,7 +19,7 @@
     _players = [NSMutableArray array];
     
     for (int i = 0; i < playerCount; i++) {
-        Player* newPlayer = [[Player alloc] initWithId:i];
+        Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards];
         
         int startMoney = [_gameConfig.moneyStart[i] intValue];
         [newPlayer gainMoney:startMoney];
@@ -153,7 +153,6 @@
 }
 
 - (BOOL)shouldProcessGamble {
-    // TODO: maybe don't make turn state <= once you have more concrete input
     return [self haveAllPlayersPlayedLuck] && [self hasFirstPlayerChosenAdjustAction] && _turnState == TURN_STATE_SELECT_ADJUST_ACTION;
 }
 

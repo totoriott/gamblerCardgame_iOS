@@ -14,6 +14,7 @@
     if (self = [super init]) {
         // TODO: don't hardcode these later
         
+        _defaultLuckCards = @[@0, @1];
         _moneyStart = @[@1, @1, @2, @2];
         _moneyGoal = 15;
         

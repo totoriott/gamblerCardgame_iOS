@@ -19,16 +19,13 @@
 
 @implementation Player
 
-- (instancetype)initWithId:(int)playerId {
+- (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards {
     if (self = [super init]) {
         _playerId = playerId;
         _money = 0;
         _cardGamblers = [NSMutableArray array];
         
-        // TODO: maybe make it so you don't have 0/1 by default?
-        _cardNumbers = [NSMutableArray array];
-        [_cardNumbers addObject:@0];
-        [_cardNumbers addObject:@1];
+        _cardNumbers = [defaultLuckCards mutableCopy];
     }
     return self;
 }

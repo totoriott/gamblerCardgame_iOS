@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSMutableArray<NSNumber*>* cardNumbers;
 @property (nonatomic) int money;
 
-- (instancetype)initWithId:(int)playerId;
+- (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards;
 
 - (NSString*)playerStatusString;
 
