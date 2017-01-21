@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "GameInstance.h"
-
 @interface AppDelegate ()
 
 @end
@@ -19,11 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    // Testing point for text-based app
-    GameInstance *game = [[GameInstance alloc] init];
-    [game initNewGameWithPlayers:4];
-    [game performAllAiActions];
     
     return YES;
 }

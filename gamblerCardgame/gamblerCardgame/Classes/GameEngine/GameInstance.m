@@ -21,6 +21,10 @@
     
     for (int i = 0; i < playerCount; i++) {
         AiModel* aiModel = [[AiModel alloc] init];
+        if (i == 0) {
+            aiModel = nil; // TODO: IT'S HARDCODE HUMAN PLAYER
+        }
+        
         Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards aiModel:aiModel];
         
         int startMoney = [_gameConfig.moneyStart[i] intValue];
@@ -114,6 +118,7 @@
     
     switch (turnState) {
         case TURN_STATE_SELECT_LEAD_LUCK:
+            NSLog(@"P%d leads with a %d", playerId, choice1);
             [currentTurn logLuckPlay:choice1 forPlayer:playerId];
             break;
             
