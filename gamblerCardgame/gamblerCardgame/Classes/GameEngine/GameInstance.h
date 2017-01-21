@@ -28,11 +28,12 @@
 @property (nonatomic) TurnState turnState;
 
 - (void)initNewGameWithPlayers:(int)playerCount;
-- (void)runGame;
+- (void)performAllAiActions;
 
 - (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1;
 - (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 choice2:(int)choice2;
 
+- (BOOL)playerCanActDuringCurrentTurnState:(int)playerId;
 - (BOOL)isGameOver;
 - (BOOL)hasFirstPlayerPlayedLuck;
 - (BOOL)haveAllPlayersPlayedLuck;

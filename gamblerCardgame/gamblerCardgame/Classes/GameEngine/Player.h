@@ -11,6 +11,8 @@
 #import "CardGambler.h"
 #import "GameUtils.h"
 
+@class GameInstance;
+
 @interface Player : NSObject
 
 @property (nonatomic) int playerId;
@@ -31,6 +33,7 @@
 - (void)addCardGambler:(CardGambler*)cardGambler;
 
 // TODO: MOVE THESE INTO AI LATER AND GIVE INTELLIGENCE AND BOARD STATE
+- (void)performAiActions:(GameInstance*)game;
 - (int)getLeadLuckCard;
 - (int)getLuckCard;
 - (int)getLuckAdjust;

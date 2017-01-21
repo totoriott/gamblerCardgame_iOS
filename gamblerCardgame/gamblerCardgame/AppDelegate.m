@@ -23,7 +23,7 @@
     // Testing point for text-based app
     GameInstance *game = [[GameInstance alloc] init];
     [game initNewGameWithPlayers:4];
-    [game runGame];
+    [game performAllAiActions];
     
     return YES;
 }

@@ -68,6 +68,28 @@
     _turnState = TURN_STATE_SELECT_LEAD_LUCK;
 }
 
+- (BOOL)playerCanActDuringCurrentTurnState:(int)playerId {
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    
+    switch (_turnState) {
+        case TURN_STATE_SELECT_LUCK: case TURN_STATE_SELECT_LEAD_LUCK: // TODO: decouple
+            return [currentTurn getLuckPlayForPlayer:playerId] == TURNLOG_ACTION_NOT_CHOSEN;
+            break;
+            
+        case TURN_STATE_SELECT_ADJUST_ACTION:
+            return playerId == _currentPlayerIndex && ![self hasFirstPlayerChosenAdjustAction];
+            break;
+            
+        case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
+            return playerId == _currentPlayerIndex && ![self hasFirstPlayerChosenEndTurnAction];
+            
+        default:
+            break;
+    }
+    
+    return NO;
+}
+
 - (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 {
     [self processGameActionForPlayer:playerId turnState:turnState withChoice1:choice1 choice2:0];
 }
@@ -107,6 +129,17 @@
     } else if ([self shouldProcessEndTurn]) {
         [self processEndTurn];
     }
+    
+    if (![self isGameOver]) {
+        [self performAllAiActions];
+    }
+}
+
+- (void)performAllAiActions {
+    // TODO: only process AI actions if you're the "server" of course
+    for (Player* player in _players) {
+        [player performAiActions:self];
+    }
 }
 
 - (BOOL)shouldProcessGamble {
@@ -116,26 +149,6 @@
 
 - (BOOL)shouldProcessEndTurn {
     return [self hasFirstPlayerChosenEndTurnAction] && _turnState == TURN_STATE_SELECT_POST_GAMBLE_ACTION;
-}
-
-// TODO: orphaned, remove this
-- (void)runGame {
-    while (![self isGameOver]) {
-        Player* curPlayer = [self getCurPlayer];
-        // TODO: people select luck
-        for (Player* player in _players) {
-            [self processGameActionForPlayer:player.playerId turnState:_turnState withChoice1:[player getLuckCard]];
-        }
-
-        // TODO: P selects luck adjust
-        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:[curPlayer getLuckAdjust]];
-        
-        // TODO: P selects end-turn action
-        NSArray<NSNumber*>* playerChoice = [curPlayer getEndTurnAction];
-        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:[playerChoice[0] intValue] choice2:[playerChoice[1] intValue]];
-
-        [self printGameStatus];
-    }
 }
 
 - (Player*)getCurPlayer {
@@ -192,8 +205,7 @@
 - (void)processGamble {
     Player* curPlayer = [self getCurPlayer];
     TurnLog* currentTurn = [_gameLog getMostRecentTurn];
-    NSLog(@"%@", [currentTurn turnLogStatus]);
-    
+
     // process adjusting
     if ([currentTurn getLuckAdjust] != 0) {
         [curPlayer gainMoney:-1 * _gameConfig.costOfAdjust];
@@ -268,6 +280,7 @@
         _currentPlayerIndex = 0;
     }
     
+    [self printGameStatus];
     [self beginNewTurn];
 }
 

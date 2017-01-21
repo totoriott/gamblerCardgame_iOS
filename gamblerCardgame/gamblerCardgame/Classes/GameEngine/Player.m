@@ -8,6 +8,8 @@
 
 #import "Player.h"
 
+#import "GameInstance.h"
+
 @implementation Player
 
 - (instancetype)initWithId:(int)playerId {
@@ -153,6 +155,36 @@
     }*/
     int randomIndex = (arc4random() % [_cardGamblers count]);
     return [NSArray arrayWithObjects:[NSNumber numberWithInt:ENDTURN_SUPER], [NSNumber numberWithInt:[_cardGamblers[randomIndex] cardWinningNumber]], nil];
+}
+
+- (void)performAiActions:(GameInstance *)game {
+    if (![game playerCanActDuringCurrentTurnState:_playerId]) {
+        return;
+    }
+    
+    BOOL isCurPlayer = _playerId == game.currentPlayerIndex;
+
+    switch (game.turnState) {
+        case TURN_STATE_SELECT_LEAD_LUCK: case TURN_STATE_SELECT_LUCK: // TODO: separate these
+            [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckCard]];
+            break;
+            
+        case TURN_STATE_SELECT_ADJUST_ACTION:
+            if (isCurPlayer) {
+                [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckAdjust]];
+            }
+            break;
+            
+        case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
+            if (isCurPlayer) {
+                NSArray<NSNumber*>* playerChoice = [self getEndTurnAction];
+                [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[playerChoice[0] intValue] choice2:[playerChoice[1] intValue]];
+            }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end
