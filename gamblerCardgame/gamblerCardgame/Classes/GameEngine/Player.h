@@ -21,7 +21,7 @@
 @property (nonatomic) int money;
 @property (nonatomic, strong) AiModel* aiModel;
 
-- (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards;
+- (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards aiModel:(AiModel*)aiModel;
 
 - (NSString*)playerStatusString;
 

@@ -7,6 +7,7 @@
 //
 
 #import "GameInstance.h"
+#import "AiModel.h"
 
 @implementation GameInstance
 
@@ -19,7 +20,8 @@
     _players = [NSMutableArray array];
     
     for (int i = 0; i < playerCount; i++) {
-        Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards];
+        AiModel* aiModel = [[AiModel alloc] init];
+        Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards aiModel:aiModel];
         
         int startMoney = [_gameConfig.moneyStart[i] intValue];
         [newPlayer gainMoney:startMoney];

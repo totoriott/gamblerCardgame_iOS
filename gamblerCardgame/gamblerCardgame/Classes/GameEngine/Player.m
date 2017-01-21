@@ -20,7 +20,7 @@
 
 @implementation Player
 
-- (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards {
+- (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards aiModel:(AiModel*)aiModel {
     if (self = [super init]) {
         _playerId = playerId;
         _money = 0;
@@ -28,7 +28,7 @@
         
         _cardNumbers = [defaultLuckCards mutableCopy];
         
-        _aiModel = [[AiModel alloc] initWithPlayer:self]; // TODO: switch out AiModels
+        _aiModel = [aiModel initWithPlayer:self]; // TODO: switch out AiModels
     }
     return self;
 }
