@@ -68,8 +68,41 @@
     _turnState = TURN_STATE_SELECT_LEAD_LUCK;
 }
 
-- (void)processGameUpdate {
-    if ([self shouldProcessGamble]) {
+- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 {
+    [self processGameActionForPlayer:playerId turnState:turnState withChoice1:choice1 choice2:0];
+}
+
+- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 choice2:(int)choice2  {
+    
+    if (turnState != _turnState) {
+        return; // TODO: game action appears to be invalid, can we bounce this more cleverly?
+    }
+    
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    
+    // TODO: check validity of inputs and return
+    
+    switch (turnState) {
+        case TURN_STATE_SELECT_LEAD_LUCK: case TURN_STATE_SELECT_LUCK: // TODO: separate these
+            [currentTurn logLuckPlay:choice1 forPlayer:playerId];
+            break;
+            
+        case TURN_STATE_SELECT_ADJUST_ACTION:
+            [currentTurn logLuckAdjust:choice1];
+            break;
+            
+        case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
+            [currentTurn logEndTurnAction:(EndTurnAction)choice1 cardSelected:choice2];
+            break;
+            
+        default:
+            break;
+    }
+    
+    // Update game state
+    if ([self haveAllPlayersPlayedLuck] && _turnState <= TURN_STATE_SELECT_LUCK) { // TODO: better this
+        _turnState = TURN_STATE_SELECT_ADJUST_ACTION;
+    } else if ([self shouldProcessGamble]) {
         [self processGamble];
     } else if ([self shouldProcessEndTurn]) {
         [self processEndTurn];
@@ -78,7 +111,7 @@
 
 - (BOOL)shouldProcessGamble {
     // TODO: maybe don't make turn state <= once you have more concrete input
-    return [self haveAllPlayersPlayedLuck] && [self hasFirstPlayerChosenAdjustAction] && _turnState <= TURN_STATE_SELECT_ADJUST_ACTION;
+    return [self haveAllPlayersPlayedLuck] && [self hasFirstPlayerChosenAdjustAction] && _turnState == TURN_STATE_SELECT_ADJUST_ACTION;
 }
 
 - (BOOL)shouldProcessEndTurn {
@@ -89,13 +122,12 @@
     
     while (![self isGameOver]) {
         // TODO: people select luck
-        TurnLog* currentTurn = [_gameLog getMostRecentTurn];
         for (Player* player in _players) {
             NSArray* luckCards = [player availableLuckCards];
             
             int randomIndex = (arc4random() % [luckCards count]);
             
-            [currentTurn logLuckPlay:[luckCards[randomIndex] intValue] forPlayer:player.playerId];
+            [self processGameActionForPlayer:player.playerId turnState:_turnState withChoice1:[luckCards[randomIndex] intValue]];
         }
 
         // TODO: P selects luck adjust
@@ -104,32 +136,28 @@
             int randomChance = (arc4random() % 8);
             switch (randomChance) {
                 case 0:
-                    [currentTurn logLuckAdjust:1];
+                    [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:1];
                     break;
                     
                 case 1:
-                    [currentTurn logLuckAdjust:-1];
+                    [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:-1];
                     break;
                     
                 default:
-                    [currentTurn logLuckAdjust:0];
+                    [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:0];
                     break;
             }
         }
-        
-        [self processGameUpdate];
         
         // TODO: P selects end-turn action
         NSArray<NSNumber*>* cardsCanBuy = [_gameBoard cardNumbersPurchasableWithMoneyAmount:curPlayer.money];
         if ([cardsCanBuy count] > 0) {
             int randomIndex = (arc4random() % [cardsCanBuy count]);
-            [currentTurn logEndTurnAction:ENDTURN_BUY cardSelected:[cardsCanBuy[randomIndex] intValue]];
+            [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_BUY choice2:[cardsCanBuy[randomIndex] intValue]];
         } else {
             int randomIndex = (arc4random() % [curPlayer.cardGamblers count]);
-            [currentTurn logEndTurnAction:ENDTURN_SUPER cardSelected:[curPlayer.cardGamblers[randomIndex] cardWinningNumber]];
+            [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_SUPER choice2:[curPlayer.cardGamblers[randomIndex] cardWinningNumber]];
         }
-        
-        [self processGameUpdate];
 
         [self printGameStatus];
     }

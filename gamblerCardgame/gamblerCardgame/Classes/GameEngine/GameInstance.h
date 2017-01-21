@@ -29,7 +29,9 @@
 
 - (void)initNewGameWithPlayers:(int)playerCount;
 - (void)runGame;
-- (void)processGameUpdate;
+
+- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1;
+- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 choice2:(int)choice2;
 
 - (BOOL)isGameOver;
 - (BOOL)hasFirstPlayerPlayedLuck;
