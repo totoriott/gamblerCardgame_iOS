@@ -107,4 +107,52 @@
     }
 }
 
+// TODO: MOVE THESE INTO AI LATER AND GIVE INTELLIGENCE AND BOARD STATE
+- (int)getLeadLuckCard {
+    NSArray* luckCards = [self availableLuckCards];
+    
+    int randomIndex = (arc4random() % [luckCards count]);
+    
+    return [luckCards[randomIndex] intValue];
+}
+
+- (int)getLuckCard {
+    return [self getLeadLuckCard];
+}
+
+- (int)getLuckAdjust {
+    // TODO
+    /*if (curPlayer.money >= _gameConfig.costOfAdjust) {
+        int randomChance = (arc4random() % 8);
+        switch (randomChance) {
+            case 0:
+                [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:1];
+                break;
+                
+            case 1:
+                [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:-1];
+                break;
+                
+            default:
+                [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:0];
+                break;
+        }
+    }*/
+    return 0;
+}
+
+- (NSArray<NSNumber*>*)getEndTurnAction {
+    // TODO
+    /*NSArray<NSNumber*>* cardsCanBuy = [_gameBoard cardNumbersPurchasableWithMoneyAmount:curPlayer.money];
+    if ([cardsCanBuy count] > 0) {
+        int randomIndex = (arc4random() % [cardsCanBuy count]);
+        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_BUY choice2:[cardsCanBuy[randomIndex] intValue]];
+    } else {
+        int randomIndex = (arc4random() % [curPlayer.cardGamblers count]);
+        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_SUPER choice2:[curPlayer.cardGamblers[randomIndex] cardWinningNumber]];
+    }*/
+    int randomIndex = (arc4random() % [_cardGamblers count]);
+    return [NSArray arrayWithObjects:[NSNumber numberWithInt:ENDTURN_SUPER], [NSNumber numberWithInt:[_cardGamblers[randomIndex] cardWinningNumber]], nil];
+}
+
 @end

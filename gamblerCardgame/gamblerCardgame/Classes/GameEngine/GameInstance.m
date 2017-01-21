@@ -118,46 +118,21 @@
     return [self hasFirstPlayerChosenEndTurnAction] && _turnState == TURN_STATE_SELECT_POST_GAMBLE_ACTION;
 }
 
+// TODO: orphaned, remove this
 - (void)runGame {
-    
     while (![self isGameOver]) {
+        Player* curPlayer = [self getCurPlayer];
         // TODO: people select luck
         for (Player* player in _players) {
-            NSArray* luckCards = [player availableLuckCards];
-            
-            int randomIndex = (arc4random() % [luckCards count]);
-            
-            [self processGameActionForPlayer:player.playerId turnState:_turnState withChoice1:[luckCards[randomIndex] intValue]];
+            [self processGameActionForPlayer:player.playerId turnState:_turnState withChoice1:[player getLuckCard]];
         }
 
         // TODO: P selects luck adjust
-        Player* curPlayer = [self getCurPlayer];
-        if (curPlayer.money >= _gameConfig.costOfAdjust) {
-            int randomChance = (arc4random() % 8);
-            switch (randomChance) {
-                case 0:
-                    [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:1];
-                    break;
-                    
-                case 1:
-                    [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:-1];
-                    break;
-                    
-                default:
-                    [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:0];
-                    break;
-            }
-        }
+        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:[curPlayer getLuckAdjust]];
         
         // TODO: P selects end-turn action
-        NSArray<NSNumber*>* cardsCanBuy = [_gameBoard cardNumbersPurchasableWithMoneyAmount:curPlayer.money];
-        if ([cardsCanBuy count] > 0) {
-            int randomIndex = (arc4random() % [cardsCanBuy count]);
-            [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_BUY choice2:[cardsCanBuy[randomIndex] intValue]];
-        } else {
-            int randomIndex = (arc4random() % [curPlayer.cardGamblers count]);
-            [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_SUPER choice2:[curPlayer.cardGamblers[randomIndex] cardWinningNumber]];
-        }
+        NSArray<NSNumber*>* playerChoice = [curPlayer getEndTurnAction];
+        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:[playerChoice[0] intValue] choice2:[playerChoice[1] intValue]];
 
         [self printGameStatus];
     }
