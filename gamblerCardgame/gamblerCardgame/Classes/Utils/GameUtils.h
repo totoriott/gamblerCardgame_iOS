@@ -19,6 +19,14 @@ typedef NS_ENUM(NSUInteger, EndTurnAction) {
     ENDTURN_BUY
 };
 
+typedef NS_ENUM(NSUInteger, TurnState) {
+    TURN_STATE_SELECT_LEAD_LUCK,
+    TURN_STATE_SELECT_LUCK,
+    TURN_STATE_SELECT_ADJUST_ACTION,
+    TURN_STATE_SELECT_POST_GAMBLE_ACTION,
+    TURN_STATE_TURN_FINISHED
+};
+
 @interface GameUtils : NSObject
 
 @end

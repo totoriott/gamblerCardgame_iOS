@@ -25,8 +25,11 @@
 @property (nonatomic, strong) GameLog* gameLog;
 @property (nonatomic, strong) GameBoard* gameBoard;
 
+@property (nonatomic) TurnState turnState;
+
 - (void)initNewGameWithPlayers:(int)playerCount;
 - (void)runGame;
+- (void)processGameUpdate;
 
 - (BOOL)isGameOver;
 - (BOOL)hasFirstPlayerPlayedLuck;

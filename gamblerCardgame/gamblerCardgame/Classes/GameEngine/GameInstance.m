@@ -29,9 +29,8 @@
 
     _currentPlayerIndex = 0;
     _fumbleMoneyTotal = 0;
-}
-
-- (void)runGame {
+    
+    // TODO: start game stuff is here for now
     // select initial cards
     // TODO: for simplicity sake, we are just giving everyone random cards for now
     for (Player* player in _players) {
@@ -61,7 +60,32 @@
         [player addCardGambler:card2];
     }
     
+    [self beginNewTurn];
+}
+
+- (void)beginNewTurn {
     [_gameLog startNewTurn];
+    _turnState = TURN_STATE_SELECT_LEAD_LUCK;
+}
+
+- (void)processGameUpdate {
+    if ([self shouldProcessGamble]) {
+        [self processGamble];
+    } else if ([self shouldProcessEndTurn]) {
+        [self processEndTurn];
+    }
+}
+
+- (BOOL)shouldProcessGamble {
+    // TODO: maybe don't make turn state <= once you have more concrete input
+    return [self haveAllPlayersPlayedLuck] && [self hasFirstPlayerChosenAdjustAction] && _turnState <= TURN_STATE_SELECT_ADJUST_ACTION;
+}
+
+- (BOOL)shouldProcessEndTurn {
+    return [self hasFirstPlayerChosenEndTurnAction] && _turnState == TURN_STATE_SELECT_POST_GAMBLE_ACTION;
+}
+
+- (void)runGame {
     
     while (![self isGameOver]) {
         // TODO: people select luck
@@ -93,7 +117,7 @@
             }
         }
         
-        [self processGamble];
+        [self processGameUpdate];
         
         // TODO: P selects end-turn action
         NSArray<NSNumber*>* cardsCanBuy = [_gameBoard cardNumbersPurchasableWithMoneyAmount:curPlayer.money];
@@ -105,7 +129,8 @@
             [currentTurn logEndTurnAction:ENDTURN_SUPER cardSelected:[curPlayer.cardGamblers[randomIndex] cardWinningNumber]];
         }
         
-        [self processEndTurn];
+        [self processGameUpdate];
+
         [self printGameStatus];
     }
 }
@@ -208,8 +233,9 @@
                 [player gainMoney:1];
             }
         }
-        
     }
+    
+    _turnState = TURN_STATE_SELECT_POST_GAMBLE_ACTION;
 }
 
 - (void)processEndTurn {
@@ -239,7 +265,7 @@
         _currentPlayerIndex = 0;
     }
     
-    [_gameLog startNewTurn];
+    [self beginNewTurn];
 }
 
 @end
