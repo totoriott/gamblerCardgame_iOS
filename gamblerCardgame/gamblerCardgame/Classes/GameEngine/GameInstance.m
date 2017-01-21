@@ -66,6 +66,8 @@
 }
 
 - (void)beginNewTurn {
+    NSLog(@"---");
+    [self printGameStatus];
     [_gameLog startNewTurn];
     _turnState = TURN_STATE_SELECT_LEAD_LUCK;
 }
@@ -183,8 +185,6 @@
     for (int i = 0; i < [_players count]; i++) {
         NSLog(@"%@", [_players[i] playerStatusString]);
     }
-    
-    NSLog(@"");
 }
 
 - (BOOL)hasFirstPlayerPlayedLuck {
@@ -224,11 +224,14 @@
     
     // pay off all winners
     int totalLuck = [currentTurn getTotalLuck];
+    NSLog(@"Today's luck: %@ = %d", [currentTurn turnLuckString], totalLuck);
+    
     BOOL someoneWon = NO;
     for (Player* player in _players) {
         int amountWon = [player payoffAllCardsWithValue:totalLuck];
         
         if (amountWon > 0) {
+            NSLog(@"P%d earns $%d", player.playerId, amountWon);
             someoneWon = YES;
         }
     }
@@ -247,6 +250,7 @@
         int fumbleAmount = highestMoney / 2;
         for (Player* player in _players) {
             if (player.money == highestMoney) {
+                NSLog(@"P%d fumbles $%d", player.playerId, fumbleAmount);
                 [player gainMoney:-1 * fumbleAmount];
                 [_gameBoard fumbleMoneyAdd:fumbleAmount];
             }
@@ -255,6 +259,7 @@
         // redistribute fumble
         while (_gameBoard.fumbleMoneyTotal >= (int)[_players count]) {
             [_gameBoard fumbleMoneyRemove:(int)[_players count]];
+            NSLog(@"All players take $1 from fumble stock");
             for (Player* player in _players) {
                 [player gainMoney:1];
             }
@@ -276,10 +281,12 @@
                 [curPlayer gainMoney:-1 * cardBought.cost];
                 [curPlayer addCardGambler:cardBought];
             }
+            NSLog(@"P%d buys a %d", _currentPlayerIndex, [currentTurn getEndTurnCardSelected]);
             break;
             
         case ENDTURN_SUPER:
             [curPlayer setCardToSuperWithValue:[currentTurn getEndTurnCardSelected]];
+            NSLog(@"P%d supers a %d", _currentPlayerIndex, [currentTurn getEndTurnCardSelected]);
             break;
             
         case ENDTURN_NOT_SELECTED:
@@ -291,7 +298,6 @@
         _currentPlayerIndex = 0;
     }
     
-    [self printGameStatus];
     [self beginNewTurn];
 }
 

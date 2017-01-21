@@ -43,6 +43,23 @@
     return statusString; // TODO
 }
 
+- (NSString *)turnLuckString {
+    NSString* statusString = @"";
+    for (NSNumber* play in _luckPlay) {
+        if ([play intValue] == TURNLOG_ACTION_NOT_CHOSEN) {
+            statusString = [NSString stringWithFormat:@"%@?", statusString];
+        } else {
+            statusString = [NSString stringWithFormat:@"%@%d", statusString, [play intValue]];
+        }
+    }
+    
+    if (_luckAdjust != TURNLOG_ACTION_NOT_CHOSEN) {
+        statusString = [NSString stringWithFormat:@"%@ + %d", statusString, _luckAdjust];
+    }
+    
+    return statusString;
+}
+
 - (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId {
     _luckPlay[playerId] = [NSNumber numberWithInt:luckValue];
 }

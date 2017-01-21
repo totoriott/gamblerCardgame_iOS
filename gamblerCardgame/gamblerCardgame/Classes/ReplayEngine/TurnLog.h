@@ -22,6 +22,7 @@
 - (instancetype)initWithPlayerCount:(int)playerCount;
 
 - (NSString*)turnLogStatus;
+- (NSString*)turnLuckString;
 
 - (void)logLuckPlay:(int)luckValue forPlayer:(int)playerId;
 - (void)logLuckAdjust:(int)adjust;
