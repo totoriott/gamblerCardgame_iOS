@@ -34,8 +34,4 @@
 
 // TODO: MOVE THESE INTO AI LATER AND GIVE INTELLIGENCE AND BOARD STATE
 - (void)performAiActions:(GameInstance*)game;
-- (int)getLeadLuckCard;
-- (int)getLuckCard;
-- (int)getLuckAdjust;
-- (NSArray<NSNumber*>*)getEndTurnAction;
 @end

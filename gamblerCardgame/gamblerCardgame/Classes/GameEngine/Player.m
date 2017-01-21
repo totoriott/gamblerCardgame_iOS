@@ -10,6 +10,13 @@
 
 #import "GameInstance.h"
 
+@interface Player ()
+- (int)getLeadLuckCard:(GameInstance *)game;
+- (int)getLuckCard:(GameInstance *)game;
+- (int)getLuckAdjust:(GameInstance *)game;
+- (NSArray<NSNumber*>*)getEndTurnAction:(GameInstance *)game;
+@end
+
 @implementation Player
 
 - (instancetype)initWithId:(int)playerId {
@@ -110,7 +117,7 @@
 }
 
 // TODO: MOVE THESE INTO AI LATER AND GIVE INTELLIGENCE AND BOARD STATE
-- (int)getLeadLuckCard {
+- (int)getLeadLuckCard:(GameInstance *)game {
     NSArray* luckCards = [self availableLuckCards];
     
     int randomIndex = (arc4random() % [luckCards count]);
@@ -118,43 +125,40 @@
     return [luckCards[randomIndex] intValue];
 }
 
-- (int)getLuckCard {
-    return [self getLeadLuckCard];
+- (int)getLuckCard:(GameInstance *)game {
+    return [self getLeadLuckCard:game];
 }
 
-- (int)getLuckAdjust {
-    // TODO
-    /*if (curPlayer.money >= _gameConfig.costOfAdjust) {
+- (int)getLuckAdjust:(GameInstance *)game {
+    if (self.money >= game.gameConfig.costOfAdjust) {
         int randomChance = (arc4random() % 8);
         switch (randomChance) {
             case 0:
-                [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:1];
+                return 1;
                 break;
                 
             case 1:
-                [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:-1];
+                return -1;
                 break;
                 
             default:
-                [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:0];
+                return 0;
                 break;
         }
-    }*/
+    }
     return 0;
 }
 
-- (NSArray<NSNumber*>*)getEndTurnAction {
+- (NSArray<NSNumber*>*)getEndTurnAction:(GameInstance *)game {
     // TODO
-    /*NSArray<NSNumber*>* cardsCanBuy = [_gameBoard cardNumbersPurchasableWithMoneyAmount:curPlayer.money];
+    NSArray<NSNumber*>* cardsCanBuy = [game.gameBoard cardNumbersPurchasableWithMoneyAmount:self.money];
     if ([cardsCanBuy count] > 0) {
         int randomIndex = (arc4random() % [cardsCanBuy count]);
-        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_BUY choice2:[cardsCanBuy[randomIndex] intValue]];
+        return [NSArray arrayWithObjects:[NSNumber numberWithInt:ENDTURN_BUY], [NSNumber numberWithInt:[cardsCanBuy[randomIndex] intValue]], nil];
     } else {
-        int randomIndex = (arc4random() % [curPlayer.cardGamblers count]);
-        [self processGameActionForPlayer:_currentPlayerIndex turnState:_turnState withChoice1:ENDTURN_SUPER choice2:[curPlayer.cardGamblers[randomIndex] cardWinningNumber]];
-    }*/
-    int randomIndex = (arc4random() % [_cardGamblers count]);
-    return [NSArray arrayWithObjects:[NSNumber numberWithInt:ENDTURN_SUPER], [NSNumber numberWithInt:[_cardGamblers[randomIndex] cardWinningNumber]], nil];
+        int randomIndex = (arc4random() % [self.cardGamblers count]);
+        return [NSArray arrayWithObjects:[NSNumber numberWithInt:ENDTURN_SUPER], [NSNumber numberWithInt:[self.cardGamblers[randomIndex] cardWinningNumber]], nil];
+    }
 }
 
 - (void)performAiActions:(GameInstance *)game {
@@ -166,18 +170,18 @@
 
     switch (game.turnState) {
         case TURN_STATE_SELECT_LEAD_LUCK: case TURN_STATE_SELECT_LUCK: // TODO: separate these
-            [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckCard]];
+            [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckCard:game]];
             break;
             
         case TURN_STATE_SELECT_ADJUST_ACTION:
             if (isCurPlayer) {
-                [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckAdjust]];
+                [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckAdjust:game]];
             }
             break;
             
         case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
             if (isCurPlayer) {
-                NSArray<NSNumber*>* playerChoice = [self getEndTurnAction];
+                NSArray<NSNumber*>* playerChoice = [self getEndTurnAction:game];
                 [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[playerChoice[0] intValue] choice2:[playerChoice[1] intValue]];
             }
             break;
