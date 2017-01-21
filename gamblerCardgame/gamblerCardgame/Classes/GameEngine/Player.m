@@ -169,7 +169,11 @@
     BOOL isCurPlayer = _playerId == game.currentPlayerIndex;
 
     switch (game.turnState) {
-        case TURN_STATE_SELECT_LEAD_LUCK: case TURN_STATE_SELECT_LUCK: // TODO: separate these
+        case TURN_STATE_SELECT_LEAD_LUCK:
+            [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLeadLuckCard:game]];
+            break;
+            
+        case TURN_STATE_SELECT_LUCK:
             [game processGameActionForPlayer:self.playerId turnState:game.turnState withChoice1:[self getLuckCard:game]];
             break;
             

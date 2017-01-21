@@ -72,7 +72,11 @@
     TurnLog* currentTurn = [_gameLog getMostRecentTurn];
     
     switch (_turnState) {
-        case TURN_STATE_SELECT_LUCK: case TURN_STATE_SELECT_LEAD_LUCK: // TODO: decouple
+        case TURN_STATE_SELECT_LEAD_LUCK:
+            return playerId == _currentPlayerIndex && ![self hasFirstPlayerPlayedLuck];
+            break;
+            
+        case TURN_STATE_SELECT_LUCK:
             return [currentTurn getLuckPlayForPlayer:playerId] == TURNLOG_ACTION_NOT_CHOSEN;
             break;
             
@@ -105,7 +109,11 @@
     // TODO: check validity of inputs and return
     
     switch (turnState) {
-        case TURN_STATE_SELECT_LEAD_LUCK: case TURN_STATE_SELECT_LUCK: // TODO: separate these
+        case TURN_STATE_SELECT_LEAD_LUCK:
+            [currentTurn logLuckPlay:choice1 forPlayer:playerId];
+            break;
+            
+        case TURN_STATE_SELECT_LUCK:
             [currentTurn logLuckPlay:choice1 forPlayer:playerId];
             break;
             
@@ -122,7 +130,9 @@
     }
     
     // Update game state
-    if ([self haveAllPlayersPlayedLuck] && _turnState <= TURN_STATE_SELECT_LUCK) { // TODO: better this
+    if ([self hasFirstPlayerPlayedLuck] && _turnState == TURN_STATE_SELECT_LEAD_LUCK) {
+        _turnState = TURN_STATE_SELECT_LUCK;
+    } else if ([self haveAllPlayersPlayedLuck] && _turnState == TURN_STATE_SELECT_LUCK) { 
         _turnState = TURN_STATE_SELECT_ADJUST_ACTION;
     } else if ([self shouldProcessGamble]) {
         [self processGamble];
