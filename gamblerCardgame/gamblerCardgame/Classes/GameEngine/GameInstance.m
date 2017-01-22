@@ -12,14 +12,36 @@
 @implementation GameInstance
 
 - (void)initGameFromSerialization:(NSString*)serial {
-    _gameConfig = [[GameConfig alloc] init];
-    
     _gameLog = [[GameLog alloc] initFromSerialization:serial];
+    
+    int playerCount = (int)[[[_gameLog getMostRecentTurn] luckPlay] count];
+    [self initGameCommonSetup:playerCount];
+    
+    // TODO: this handles deserialization turn catchup
+    for (TurnLog* turn in _gameLog.turns) {
+        // TODO is this good
+        // TODO: gotta refactor all of these to take turn IG
+        
+        // these will fail if not appropriate
+        [self processGambleForTurn:turn];
+        [self processEndTurnForTurn:turn];
+    }
+}
+
+- (void)initNewGameWithPlayers:(int)playerCount {
+    _gameLog = [[GameLog alloc] initWithPlayerCount:playerCount];
+    
+    [self initGameCommonSetup:playerCount];
+
+    [self beginNewTurn];
+}
+
+- (void)initGameCommonSetup:(int)playerCount {
+    _gameConfig = [[GameConfig alloc] init];
 
     _gameBoard = [[GameBoard alloc] initWithCardConfigs:_gameConfig.cardConfigs];
     
     _players = [NSMutableArray array];
-    int playerCount = (int)[[[_gameLog getMostRecentTurn] luckPlay] count];
     
     // TODO: refactor some of this into common
     for (int i = 0; i < playerCount; i++) {
@@ -68,75 +90,6 @@
         [player addCardGambler:card1];
         [player addCardGambler:card2];
     }
-    
-    // TODO: this handles deserialization turn catchup
-    for (TurnLog* turn in _gameLog.turns) {
-        // TODO is this good
-        // TODO: gotta refactor all of these to take turn IG
-        
-        // these will fail if not appropriate
-        [self processGambleForTurn:turn];
-        [self processEndTurnForTurn:turn];
-    }
-}
-
-- (void)initNewGameWithPlayers:(int)playerCount {
-    _gameConfig = [[GameConfig alloc] init];
-    _gameLog = [[GameLog alloc] initWithPlayerCount:playerCount];
-    
-    
-    _gameBoard = [[GameBoard alloc] initWithCardConfigs:_gameConfig.cardConfigs];
-    
-    _players = [NSMutableArray array];
-    
-    for (int i = 0; i < playerCount; i++) {
-        AiModel* aiModel = [[AiModel alloc] init];
-        if (i == 0) {
-            //aiModel = nil; // TODO: IT'S HARDCODE HUMAN PLAYER
-        }
-        
-        Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards aiModel:aiModel];
-        
-        int startMoney = [_gameConfig.moneyStart[i] intValue];
-        [newPlayer gainMoney:startMoney];
-        
-        [_players addObject:newPlayer];
-    }
-
-    _currentPlayerIndex = 0;
-    _fumbleMoneyTotal = 0;
-    
-    // TODO: start game stuff is here for now
-    // select initial cards
-    // TODO: for simplicity sake, we are just giving everyone random cards for now
-    for (Player* player in _players) {
-        int value1, value2;
-        int randomIndex = 0; // TODO: force everyone to 1/2 for now (arc4random() % 3);
-        switch (randomIndex) {
-            case 0:
-                value1 = 1;
-                value2 = 2;
-                break;
-                
-            case 1:
-                value1 = 1;
-                value2 = 3;
-                break;
-                
-            case 2: default:
-                value1 = 2;
-                value2 = 3;
-                break;
-        }
-        
-        CardGambler* card1 = [_gameBoard buyCardWithNumber:value1];
-        CardGambler* card2 = [_gameBoard buyCardWithNumber:value2];
-        
-        [player addCardGambler:card1];
-        [player addCardGambler:card2];
-    }
-    
-    [self beginNewTurn];
 }
 
 - (void)beginNewTurn {
