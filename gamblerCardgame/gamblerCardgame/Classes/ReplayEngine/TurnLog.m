@@ -24,6 +24,38 @@
     return self;
 }
 
+- (instancetype)initFromSerialization:(NSString*)serial {
+    if (self = [super init]) {
+        NSArray<NSString*>* components = [serial componentsSeparatedByString:@","];
+        
+        _luckPlay = [NSMutableArray array];
+        for (int i = 0; i < components[0].length; i++) {
+            int luckPlayed = TURNLOG_ACTION_NOT_CHOSEN;
+            if ([components[0] characterAtIndex:i] != '?') {
+                luckPlayed = [components[0] characterAtIndex:i] - 48;
+            }
+            
+            [_luckPlay addObject:[NSNumber numberWithInt:luckPlayed]];
+        }
+        
+        // TODO: erorr checking?
+        _luckAdjust = TURNLOG_ACTION_NOT_CHOSEN;
+        if (![components[1] isEqualToString:@"?"]) {
+            _luckAdjust = [components[1] intValue];
+        }
+
+        // TODO: i convert these real lazily
+        _endTurnAction = ([components[2] characterAtIndex:0] - 48);
+        
+        _endTurnCardSelected = TURNLOG_ACTION_NOT_CHOSEN;
+        if ([components[2] characterAtIndex:1] != '?') {
+            _endTurnCardSelected = ([components[2] characterAtIndex:1] - 48);
+        }
+        
+    }
+    return self;
+}
+
 - (NSString *)turnLogStatus {
     return [self serialize]; // TODO
 }

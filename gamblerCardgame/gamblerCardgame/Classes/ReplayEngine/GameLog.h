@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSMutableArray<TurnLog*>* turns;
 
 - (instancetype)initWithPlayerCount:(int)playerCount;
+- (instancetype)initFromSerialization:(NSString*)serial;
 
 - (TurnLog*)getMostRecentTurn;
 

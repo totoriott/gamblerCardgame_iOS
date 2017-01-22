@@ -20,6 +20,7 @@
 @property (nonatomic) int endTurnCardSelected;
 
 - (instancetype)initWithPlayerCount:(int)playerCount;
+- (instancetype)initFromSerialization:(NSString*)serial;
 
 - (NSString*)turnLogStatus;
 - (NSString*)turnLuckString;

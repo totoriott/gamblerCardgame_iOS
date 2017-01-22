@@ -15,6 +15,9 @@
     _gameConfig = [[GameConfig alloc] init];
     _gameLog = [[GameLog alloc] initWithPlayerCount:playerCount];
     
+    // TODO: testing serialization!!
+    _gameLog = [[GameLog alloc] initFromSerialization:@"4;1010,0,11;?011,?,0?"];
+    
     _gameBoard = [[GameBoard alloc] initWithCardConfigs:_gameConfig.cardConfigs];
     
     _players = [NSMutableArray array];
