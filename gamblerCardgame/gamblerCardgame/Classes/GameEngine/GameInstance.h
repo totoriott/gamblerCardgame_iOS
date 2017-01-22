@@ -28,6 +28,8 @@
 @property (nonatomic) TurnState turnState;
 
 - (void)initNewGameWithPlayers:(int)playerCount;
+- (void)initGameFromSerialization:(NSString*)serial;
+
 - (void)performAllAiActions;
 
 - (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1;

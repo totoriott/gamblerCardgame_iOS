@@ -11,22 +11,79 @@
 
 @implementation GameInstance
 
+- (void)initGameFromSerialization:(NSString*)serial {
+    _gameConfig = [[GameConfig alloc] init];
+    
+    _gameLog = [[GameLog alloc] initFromSerialization:serial];
+
+    _gameBoard = [[GameBoard alloc] initWithCardConfigs:_gameConfig.cardConfigs];
+    
+    _players = [NSMutableArray array];
+    int playerCount = (int)[[[_gameLog getMostRecentTurn] luckPlay] count];
+    
+    // TODO: refactor some of this into common
+    for (int i = 0; i < playerCount; i++) {
+        AiModel* aiModel = [[AiModel alloc] init];
+        if (i == 0) {
+            //aiModel = nil; // TODO: IT'S HARDCODE HUMAN PLAYER
+        }
+        
+        Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards aiModel:aiModel];
+        
+        int startMoney = [_gameConfig.moneyStart[i] intValue];
+        [newPlayer gainMoney:startMoney];
+        
+        [_players addObject:newPlayer];
+    }
+    
+    _currentPlayerIndex = 0;
+    _fumbleMoneyTotal = 0;
+    
+    // TODO: start game stuff is here for now
+    // select initial cards
+    // TODO: for simplicity sake, we are just giving everyone random cards for now
+    for (Player* player in _players) {
+        int value1, value2;
+        int randomIndex = 0; // TODO: force everyone to 1/2 for now (arc4random() % 3);
+        switch (randomIndex) {
+            case 0:
+                value1 = 1;
+                value2 = 2;
+                break;
+                
+            case 1:
+                value1 = 1;
+                value2 = 3;
+                break;
+                
+            case 2: default:
+                value1 = 2;
+                value2 = 3;
+                break;
+        }
+        
+        CardGambler* card1 = [_gameBoard buyCardWithNumber:value1];
+        CardGambler* card2 = [_gameBoard buyCardWithNumber:value2];
+        
+        [player addCardGambler:card1];
+        [player addCardGambler:card2];
+    }
+    
+    // TODO: this handles deserialization turn catchup
+    for (TurnLog* turn in _gameLog.turns) {
+        // TODO is this good
+        // TODO: gotta refactor all of these to take turn IG
+        
+        // these will fail if not appropriate
+        [self processGambleForTurn:turn];
+        [self processEndTurnForTurn:turn];
+    }
+}
+
 - (void)initNewGameWithPlayers:(int)playerCount {
     _gameConfig = [[GameConfig alloc] init];
     _gameLog = [[GameLog alloc] initWithPlayerCount:playerCount];
     
-    // TODO: testing serialization!!
-    /*
-     2017-01-22 12:53:24.500 gamblerCardgame[95243:10114189] Turn 20 - Active P0
-     2017-01-22 12:53:24.500 gamblerCardgame[95243:10114189]  - fumble $1
-     2017-01-22 12:53:24.500 gamblerCardgame[95243:10114189] P0 - $20 {0132} [1][2][3][9][5][4]
-     2017-01-22 12:53:24.500 gamblerCardgame[95243:10114189] P1 - $11 {0123} [1][2*][6][2][3][9]
-     2017-01-22 12:53:24.500 gamblerCardgame[95243:10114189] P2 - $14 {012} [1][2][3*][7][3][3]
-     2017-01-22 12:53:24.500 gamblerCardgame[95243:10114189] P3 - $7 {012} [1*][2][1][6][5][7]
-     2017-01-22 12:53:24.501 gamblerCardgame[95243:10114189] 4;0101,1,11;0110,0,26;0100,-1,23;1101,1,21;1101,0,23;0011,-1,22;0211,0,27;0121,-1,26;1101,-1,29;3220,0,23;0202,0,23;0012,1,25;3000,0,25;0021,1,29;3201,0,23;2000,1,27;2101,0,24;1020,0,12;2102,0,13;2002,0,11;????,?,0?
-     */
-    _gameLog = [[GameLog alloc] initFromSerialization:@"4;0101,1,11;0110,0,26;0100,-1,23;1101,1,21;1101,0,23;0011,-1,22;0211,0,27;0121,-1,26;1101,-1,29;3220,0,23;0202,0,23;0012,1,25;3000,0,25;0021,1,29;3201,0,23;2000,1,27;2101,0,24;1020,0,12;2102,0,13;2002,0,11;????,?,0?"];
-    // TODO: align this with other serialize
     
     _gameBoard = [[GameBoard alloc] initWithCardConfigs:_gameConfig.cardConfigs];
     
@@ -79,17 +136,7 @@
         [player addCardGambler:card2];
     }
     
-    // TODO: [self beginNewTurn];
-    
-    // TODO: this handles deserialization turn catchup
-    for (TurnLog* turn in _gameLog.turns) {
-        // TODO is this good
-        // TODO: gotta refactor all of these to take turn IG
-        
-        // these will fail if not appropriate
-        [self processGambleForTurn:turn];
-        [self processEndTurnForTurn:turn];
-    }
+    [self beginNewTurn];
 }
 
 - (void)beginNewTurn {
