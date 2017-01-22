@@ -27,4 +27,15 @@
     [_turns addObject:newTurn];
 }
 
+- (NSString *)serialize {
+    NSString* serialization = @"";
+    for (TurnLog* turn in _turns) {
+        serialization = [NSString stringWithFormat:@"%@%@;", serialization, [turn serialize]];
+    }
+    
+    // chop off the last semicolon
+    // TODO: is this weird if turnlog is empty
+    return [serialization substringToIndex:[serialization length] - 2];
+}
+
 @end

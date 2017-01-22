@@ -21,4 +21,6 @@
 
 - (void)startNewTurn;
 
+- (NSString*)serialize;
+
 @end

@@ -112,6 +112,10 @@
         return; // TODO: game action appears to be invalid, can we bounce this more cleverly?
     }
     
+    if (![self playerCanActDuringCurrentTurnState:playerId]) {
+        return;
+    }
+    
     TurnLog* currentTurn = [_gameLog getMostRecentTurn];
     
     // TODO: check validity of inputs and return
@@ -148,6 +152,9 @@
     } else if ([self shouldProcessEndTurn]) {
         [self processEndTurn];
     }
+    
+    // TODO: testing serialization here
+    NSLog(@"%@", [_gameLog serialize]);
     
     if (![self isGameOver]) {
         [self performAllAiActions];

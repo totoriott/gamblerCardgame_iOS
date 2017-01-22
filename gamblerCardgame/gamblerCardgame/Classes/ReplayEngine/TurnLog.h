@@ -16,8 +16,8 @@
 
 @property (nonatomic, strong) NSMutableArray<NSNumber*>* luckPlay;
 @property (nonatomic) int luckAdjust;
-@property (nonatomic) int endTurnAction;
-@property (nonatomic) EndTurnAction endTurnCardSelected;
+@property (nonatomic) EndTurnAction endTurnAction;
+@property (nonatomic) int endTurnCardSelected;
 
 - (instancetype)initWithPlayerCount:(int)playerCount;
 
@@ -34,5 +34,7 @@
 - (int)getEndTurnCardSelected;
 
 - (int)getTotalLuck;
+- (NSString*)serialize;
+
 
 @end
