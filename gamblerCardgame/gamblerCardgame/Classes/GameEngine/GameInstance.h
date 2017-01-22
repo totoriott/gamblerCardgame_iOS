@@ -40,7 +40,7 @@
 - (BOOL)hasFirstPlayerChosenAdjustAction;
 - (BOOL)hasFirstPlayerChosenEndTurnAction;
 
-- (void)processGamble;
-- (void)processEndTurn;
+- (void)processGambleForTurn:(TurnLog*)currentTurn;
+- (void)processEndTurnForTurn:(TurnLog*)currentTurn;
 
 @end
