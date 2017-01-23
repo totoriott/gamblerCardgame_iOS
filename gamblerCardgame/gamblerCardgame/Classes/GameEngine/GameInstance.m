@@ -62,7 +62,7 @@
     for (int i = 0; i < playerCount; i++) {
         AiModel* aiModel = [[AiModel alloc] init];
         if (i == 0) {
-            aiModel = nil; // TODO: IT'S HARDCODE HUMAN PLAYER
+            //aiModel = nil; // TODO: IT'S HARDCODE HUMAN PLAYER
         }
         
         Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards aiModel:aiModel];

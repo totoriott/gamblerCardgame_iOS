@@ -9,6 +9,7 @@
 #import "Player.h"
 
 #import "AiModel.h"
+#import "GameAction.h"
 #import "GameInstance.h"
 
 @implementation Player
@@ -110,7 +111,75 @@
 }
 
 - (void)performAiActions:(GameInstance *)game {
+    /*
+    NSArray* possibleActions = [self currentPossibleActions:game];
+    for (GameAction* action in possibleActions) {
+        NSLog(@"%@", action.readableName);
+    }
+    NSLog(@"...");
+    // TODO: remove for testing */
+    
     [self.aiModel performAiActions:game];
+}
+
+// what this player can currently do
+- (NSArray<GameAction*>*)currentPossibleActions:(GameInstance *)game {
+    NSMutableArray<GameAction*>* actions = [NSMutableArray array];
+    
+    if (![game playerCanActDuringCurrentTurnState:self.playerId]) {
+        return actions;
+    }
+    
+    BOOL isCurPlayer = self.playerId == game.currentPlayerIndex;
+    
+    if (game.turnState == TURN_STATE_SELECT_LEAD_LUCK || game.turnState == TURN_STATE_SELECT_LUCK) {
+        for (NSNumber* luck in [self availableLuckCards]) {
+            GameAction* action = [[GameAction alloc] init];
+            action.playerId = self.playerId;
+            action.turnState = game.turnState;
+            action.choice1 = [luck intValue];
+            action.readableName = [NSString stringWithFormat:@"Luck %d", [luck intValue]];
+            [actions addObject:action];
+        }
+    } else if (game.turnState == TURN_STATE_SELECT_ADJUST_ACTION && isCurPlayer) {
+        // TODO: don't hardcode adjust +/- 1
+        for (int i = -1; i <= 1; i += 1) {
+            GameAction* action = [[GameAction alloc] init];
+            action.playerId = self.playerId;
+            action.turnState = game.turnState;
+            action.choice1 = i;
+            action.readableName = [NSString stringWithFormat:@"Adjust %d", i];
+            if (i == 0 || game.gameConfig.costOfAdjust <= self.money) {
+                [actions addObject:action];
+            }
+        }
+    } else if (game.turnState == TURN_STATE_SELECT_POST_GAMBLE_ACTION && isCurPlayer) {
+        // cards you can buy
+        NSArray<NSNumber*>* cardsCanBuy = [game.gameBoard cardNumbersPurchasableWithMoneyAmount:self.money];
+        for (NSNumber* card in cardsCanBuy) {
+            GameAction* action = [[GameAction alloc] init];
+            action.playerId = self.playerId;
+            action.turnState = game.turnState;
+            action.choice1 = ENDTURN_BUY;
+            action.choice2 = [card intValue];
+            action.readableName = [NSString stringWithFormat:@"Buy %d", [card intValue]];
+            [actions addObject:action];
+        }
+        
+        // cards you can super
+        // TODO: deduplicate, don't let you super already-supered cards when you implement "no action" action
+        for (CardGambler* card in self.cardGamblers) {
+            GameAction* action = [[GameAction alloc] init];
+            action.playerId = self.playerId;
+            action.turnState = game.turnState;
+            action.choice1 = ENDTURN_SUPER;
+            action.choice2 = [card cardWinningNumber];
+            action.readableName = [NSString stringWithFormat:@"Super %d", [card cardWinningNumber]];
+            [actions addObject:action];
+        }
+    }
+    
+    return actions;
 }
 
 @end

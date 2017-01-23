@@ -17,4 +17,6 @@
 @property (nonatomic) int choice1;
 @property (nonatomic) int choice2;
 
+@property (nonatomic, strong) NSString* readableName;
+
 @end
