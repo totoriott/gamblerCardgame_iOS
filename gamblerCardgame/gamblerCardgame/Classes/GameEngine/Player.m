@@ -11,13 +11,6 @@
 #import "AiModel.h"
 #import "GameInstance.h"
 
-@interface Player ()
-- (int)getLeadLuckCard:(GameInstance *)game;
-- (int)getLuckCard:(GameInstance *)game;
-- (int)getLuckAdjust:(GameInstance *)game;
-- (NSArray<NSNumber*>*)getEndTurnAction:(GameInstance *)game;
-@end
-
 @implementation Player
 
 - (instancetype)initWithId:(int)playerId defaultLuckCards:(NSArray<NSNumber*>*)defaultLuckCards aiModel:(AiModel*)aiModel {
@@ -113,51 +106,6 @@
     
     if (newNumber) {
         [_cardNumbers addObject:[NSNumber numberWithInt:[card cardCardValueGranted]]];
-    }
-}
-
-// TODO: MOVE THESE INTO AI LATER AND GIVE INTELLIGENCE AND BOARD STATE
-- (int)getLeadLuckCard:(GameInstance *)game {
-    NSArray* luckCards = [self availableLuckCards];
-    
-    int randomIndex = (arc4random() % [luckCards count]);
-    
-    return [luckCards[randomIndex] intValue];
-}
-
-- (int)getLuckCard:(GameInstance *)game {
-    return [self getLeadLuckCard:game];
-}
-
-- (int)getLuckAdjust:(GameInstance *)game {
-    if (self.money >= game.gameConfig.costOfAdjust) {
-        int randomChance = (arc4random() % 8);
-        switch (randomChance) {
-            case 0:
-                return 1;
-                break;
-                
-            case 1:
-                return -1;
-                break;
-                
-            default:
-                return 0;
-                break;
-        }
-    }
-    return 0;
-}
-
-- (NSArray<NSNumber*>*)getEndTurnAction:(GameInstance *)game {
-    // TODO
-    NSArray<NSNumber*>* cardsCanBuy = [game.gameBoard cardNumbersPurchasableWithMoneyAmount:self.money];
-    if ([cardsCanBuy count] > 0) {
-        int randomIndex = (arc4random() % [cardsCanBuy count]);
-        return [NSArray arrayWithObjects:[NSNumber numberWithInt:ENDTURN_BUY], [NSNumber numberWithInt:[cardsCanBuy[randomIndex] intValue]], nil];
-    } else {
-        int randomIndex = (arc4random() % [self.cardGamblers count]);
-        return [NSArray arrayWithObjects:[NSNumber numberWithInt:ENDTURN_SUPER], [NSNumber numberWithInt:[self.cardGamblers[randomIndex] cardWinningNumber]], nil];
     }
 }
 
