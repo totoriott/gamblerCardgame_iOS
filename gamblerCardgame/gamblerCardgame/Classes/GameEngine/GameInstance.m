@@ -17,15 +17,29 @@
     int playerCount = (int)[[[_gameLog getMostRecentTurn] luckPlay] count];
     [self initGameCommonSetup:playerCount];
     
-    // TODO: this handles deserialization turn catchup
+    // this handles deserialization turn catchup
     for (TurnLog* turn in _gameLog.turns) {
         // TODO is this good
-        // TODO: gotta refactor all of these to take turn IG
+        // TODO: make sure the game is in the proper state after
         
         // these will fail if not appropriate
         [self processGambleForTurn:turn];
         [self processEndTurnForTurn:turn];
     }
+    
+    // set the proper game state if it hasn't changed from processing before
+    if (self.turnState == TURN_STATE_SELECT_LEAD_LUCK) {
+        if ([self hasFirstPlayerPlayedLuck]) {
+            [self setTurnState:TURN_STATE_SELECT_LUCK];
+        }
+        
+        if ([self haveAllPlayersPlayedLuck] && _turnState == TURN_STATE_SELECT_LUCK) {
+            [self setTurnState:TURN_STATE_SELECT_ADJUST_ACTION];
+        }
+        
+        // gamble / end turns will have been handled above
+    }
+    // TODO: move this to function so process can use this also?
 }
 
 - (void)initNewGameWithPlayers:(int)playerCount {
@@ -90,13 +104,15 @@
         [player addCardGambler:card1];
         [player addCardGambler:card2];
     }
+    
+    [self setTurnState:TURN_STATE_SELECT_LEAD_LUCK];
 }
 
 - (void)beginNewTurn {
     NSLog(@"---");
     [self printGameStatus];
     [_gameLog startNewTurn];
-    _turnState = TURN_STATE_SELECT_LEAD_LUCK;
+    [self setTurnState:TURN_STATE_SELECT_LEAD_LUCK];
 }
 
 - (BOOL)playerCanActDuringCurrentTurnState:(int)playerId {
@@ -167,9 +183,9 @@
     
     // Update game state
     if ([self hasFirstPlayerPlayedLuck] && _turnState == TURN_STATE_SELECT_LEAD_LUCK) {
-        _turnState = TURN_STATE_SELECT_LUCK;
-    } else if ([self haveAllPlayersPlayedLuck] && _turnState == TURN_STATE_SELECT_LUCK) { 
-        _turnState = TURN_STATE_SELECT_ADJUST_ACTION;
+        [self setTurnState:TURN_STATE_SELECT_LUCK];
+    } else if ([self haveAllPlayersPlayedLuck] && _turnState == TURN_STATE_SELECT_LUCK) {
+        [self setTurnState:TURN_STATE_SELECT_ADJUST_ACTION];
     } else if ([self shouldProcessGamble]) {
         [self processGambleForTurn:[_gameLog getMostRecentTurn]];
     } else if ([self shouldProcessEndTurn]) {
@@ -305,7 +321,7 @@
         }
     }
     
-    _turnState = TURN_STATE_SELECT_POST_GAMBLE_ACTION;
+    [self setTurnState:TURN_STATE_SELECT_POST_GAMBLE_ACTION];
 }
 
 - (void)processEndTurnForTurn:(TurnLog*)currentTurn {
@@ -339,6 +355,11 @@
     if (_currentPlayerIndex >= [_players count]) {
         _currentPlayerIndex = 0;
     }
+}
+
+- (void)setTurnState:(TurnState)newState {
+    _turnState = newState;
+    NSLog(@"Changing turn state to %d.", (int)newState);
 }
 
 @end
