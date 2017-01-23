@@ -8,6 +8,7 @@
 
 #import "GameInstance.h"
 #import "AiModel.h"
+#import "GameAction.h"
 
 @implementation GameInstance
 
@@ -61,7 +62,7 @@
     for (int i = 0; i < playerCount; i++) {
         AiModel* aiModel = [[AiModel alloc] init];
         if (i == 0) {
-            //aiModel = nil; // TODO: IT'S HARDCODE HUMAN PLAYER
+            aiModel = nil; // TODO: IT'S HARDCODE HUMAN PLAYER
         }
         
         Player* newPlayer = [[Player alloc] initWithId:i defaultLuckCards:self.gameConfig.defaultLuckCards aiModel:aiModel];
@@ -141,11 +142,11 @@
     return NO;
 }
 
-- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 {
-    [self processGameActionForPlayer:playerId turnState:turnState withChoice1:choice1 choice2:0];
-}
-
-- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 choice2:(int)choice2  {
+- (void)processGameAction:(GameAction*)action {
+    int playerId = action.playerId;
+    int choice1 = action.choice1;
+    int choice2 = action.choice2;
+    TurnState turnState = action.turnState;
     
     if (turnState != _turnState) {
         return; // TODO: game action appears to be invalid, can we bounce this more cleverly?

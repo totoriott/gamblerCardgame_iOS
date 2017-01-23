@@ -8,6 +8,7 @@
 
 #import "AiModel.h"
 
+#import "GameAction.h"
 #import "GameInstance.h"
 
 @interface AiModel ()
@@ -76,26 +77,37 @@
     }
     
     BOOL isCurPlayer = self.player.playerId == game.currentPlayerIndex;
-
+    GameAction* action = [[GameAction alloc] init];
+    action.playerId = self.player.playerId;
+    
     switch (game.turnState) {
         case TURN_STATE_SELECT_LEAD_LUCK:
-            [game processGameActionForPlayer:self.player.playerId turnState:game.turnState withChoice1:[self getLeadLuckCard:game]];
+            action.turnState = game.turnState;
+            action.choice1 = [self getLeadLuckCard:game];
+            [game processGameAction:action];
             break;
             
         case TURN_STATE_SELECT_LUCK:
-            [game processGameActionForPlayer:self.player.playerId turnState:game.turnState withChoice1:[self getLuckCard:game]];
+            action.turnState = game.turnState;
+            action.choice1 = [self getLuckCard:game];
+            [game processGameAction:action];
             break;
             
         case TURN_STATE_SELECT_ADJUST_ACTION:
             if (isCurPlayer) {
-                [game processGameActionForPlayer:self.player.playerId turnState:game.turnState withChoice1:[self getLuckAdjust:game]];
+                action.turnState = game.turnState;
+                action.choice1 = [self getLuckAdjust:game];
+                [game processGameAction:action];
             }
             break;
             
         case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
             if (isCurPlayer) {
                 NSArray<NSNumber*>* playerChoice = [self getEndTurnAction:game];
-                [game processGameActionForPlayer:self.player.playerId turnState:game.turnState withChoice1:[playerChoice[0] intValue] choice2:[playerChoice[1] intValue]];
+                action.turnState = game.turnState;
+                action.choice1 = [playerChoice[0] intValue];
+                action.choice2 = [playerChoice[1] intValue]; // TODO: maybe refactor choice into an array?
+                [game processGameAction:action];
             }
             break;
             

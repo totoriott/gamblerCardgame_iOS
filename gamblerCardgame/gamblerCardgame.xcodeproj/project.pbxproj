@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8B0840AC1E33325F0094B5EA /* AiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0840AB1E33325F0094B5EA /* AiModel.m */; };
+		8B0840AF1E35CAB20094B5EA /* GameAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0840AE1E35CAB20094B5EA /* GameAction.m */; };
 		8B8428511E308F3200D754AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428501E308F3200D754AF /* main.m */; };
 		8B8428541E308F3200D754AF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428531E308F3200D754AF /* AppDelegate.m */; };
 		8B8428571E308F3200D754AF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428561E308F3200D754AF /* ViewController.m */; };
@@ -27,6 +28,8 @@
 /* Begin PBXFileReference section */
 		8B0840AA1E33325F0094B5EA /* AiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AiModel.h; sourceTree = "<group>"; };
 		8B0840AB1E33325F0094B5EA /* AiModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AiModel.m; sourceTree = "<group>"; };
+		8B0840AD1E35CAB20094B5EA /* GameAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAction.h; sourceTree = "<group>"; };
+		8B0840AE1E35CAB20094B5EA /* GameAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameAction.m; sourceTree = "<group>"; };
 		8B84284C1E308F3200D754AF /* gamblerCardgame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gamblerCardgame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B8428501E308F3200D754AF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8B8428521E308F3200D754AF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 			children = (
 				8B8428681E308F4600D754AF /* CardGambler.h */,
 				8B8428691E308F4600D754AF /* CardGambler.m */,
+				8B0840AD1E35CAB20094B5EA /* GameAction.h */,
+				8B0840AE1E35CAB20094B5EA /* GameAction.m */,
 				8B84286A1E308F4600D754AF /* GameBoard.h */,
 				8B84286B1E308F4600D754AF /* GameBoard.m */,
 				8B84286C1E308F4600D754AF /* GameConfig.h */,
@@ -239,6 +244,7 @@
 				8B84287A1E308F4600D754AF /* GameInstance.m in Sources */,
 				8B8428771E308F4600D754AF /* CardGambler.m in Sources */,
 				8B8428571E308F3200D754AF /* ViewController.m in Sources */,
+				8B0840AF1E35CAB20094B5EA /* GameAction.m in Sources */,
 				8B8428781E308F4600D754AF /* GameBoard.m in Sources */,
 				8B8428541E308F3200D754AF /* AppDelegate.m in Sources */,
 				8B8428511E308F3200D754AF /* main.m in Sources */,

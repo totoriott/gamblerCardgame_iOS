@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 
+#import "GameAction.h"
 #import "GameInstance.h"
 
 @interface ViewController ()
@@ -56,7 +57,11 @@
     }
     
     // TODO: make sure it is a valid action
-    [self.game processGameActionForPlayer:0 turnState:self.game.turnState withChoice1:luckValue];
+    GameAction* action = [[GameAction alloc] init];
+    action.playerId = 0;
+    action.turnState = self.game.turnState;
+    action.choice1 = luckValue;
+    [self.game processGameAction:action];
 }
 
 - (IBAction)pressedAdjust:(UIButton *)sender {
@@ -69,13 +74,22 @@
         adjustValue = 1;
     }
     
-    [self.game processGameActionForPlayer:0 turnState:TURN_STATE_SELECT_ADJUST_ACTION withChoice1:adjustValue];
+    GameAction* action = [[GameAction alloc] init];
+    action.playerId = 0;
+    action.turnState = TURN_STATE_SELECT_ADJUST_ACTION;
+    action.choice1 = adjustValue;
+    [self.game processGameAction:action];
 }
 
 - (IBAction)pressedEndAction:(UIButton *)sender {
     // TODO: confirm valid
     
-    [self.game processGameActionForPlayer:0 turnState:TURN_STATE_SELECT_POST_GAMBLE_ACTION withChoice1:ENDTURN_SUPER choice2:1];
+    GameAction* action = [[GameAction alloc] init];
+    action.playerId = 0;
+    action.turnState = TURN_STATE_SELECT_POST_GAMBLE_ACTION;
+    action.choice1 = ENDTURN_SUPER;
+    action.choice2 = 1;
+    [self.game processGameAction:action];
 }
 
 @end

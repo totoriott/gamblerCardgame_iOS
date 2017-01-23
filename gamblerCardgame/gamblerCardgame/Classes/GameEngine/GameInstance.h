@@ -13,6 +13,8 @@
 #import "GameLog.h"
 #import "Player.h"
 
+@class GameAction;
+
 @interface GameInstance : NSObject
 
 // TODO: serialize / deserialize
@@ -32,8 +34,7 @@
 
 - (void)performAllAiActions;
 
-- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1;
-- (void)processGameActionForPlayer:(int)playerId turnState:(TurnState)turnState withChoice1:(int)choice1 choice2:(int)choice2;
+- (void)processGameAction:(GameAction*)action;
 
 - (BOOL)playerCanActDuringCurrentTurnState:(int)playerId;
 - (BOOL)isGameOver;
