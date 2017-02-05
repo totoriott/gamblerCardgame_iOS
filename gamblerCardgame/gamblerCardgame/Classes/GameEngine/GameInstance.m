@@ -245,6 +245,26 @@
     return [currentTurn getLuckPlayForPlayer:_currentPlayerIndex] != TURNLOG_ACTION_NOT_CHOSEN;
 }
 
+- (int)luckPlayedByFirstPlayer {
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    return [currentTurn getLuckPlayForPlayer:_currentPlayerIndex];
+}
+
+-(int)totalLuckForTurn {
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    return [currentTurn getTotalLuck];
+}
+
+-(int)adjustForTurn {
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    return [currentTurn getLuckAdjust];
+}
+
+-(NSString*)turnLuckString {
+    TurnLog* currentTurn = [_gameLog getMostRecentTurn];
+    return [currentTurn turnLuckString];
+}
+
 - (BOOL)haveAllPlayersPlayedLuck {
     TurnLog* currentTurn = [_gameLog getMostRecentTurn];
     for (int i = 0; i < [_players count]; i++) {
@@ -361,6 +381,10 @@
 - (void)setTurnState:(TurnState)newState {
     _turnState = newState;
     NSLog(@"Changing turn state to %d.", (int)newState);
+}
+
+- (NSString *)nameOfFirstPlayer {
+    return [NSString stringWithFormat:@"P%d", _currentPlayerIndex];
 }
 
 @end

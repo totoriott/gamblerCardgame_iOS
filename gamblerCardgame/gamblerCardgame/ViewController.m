@@ -109,19 +109,19 @@
     NSString* statusString = @"";
     switch (self.game.turnState) {
         case TURN_STATE_SELECT_LEAD_LUCK:
-            statusString = @"Leader is selecting luck";
+            statusString = [NSString stringWithFormat:@"Leader %@ to select luck first", [self.game nameOfFirstPlayer]];
             break;
             
         case TURN_STATE_SELECT_LUCK:
-            statusString = @"Select Luck";
+            statusString = [NSString stringWithFormat:@"%@ selected %d, others to select luck", [self.game nameOfFirstPlayer], [self.game luckPlayedByFirstPlayer]];
             break;
             
         case TURN_STATE_SELECT_ADJUST_ACTION:
-            statusString = @"Select Adjust";
+            statusString = [NSString stringWithFormat:@"%@ to select adjust value", [self.game nameOfFirstPlayer]];
             break;
             
         case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
-            statusString = @"Select Post Gamble";
+            statusString = [NSString stringWithFormat:@"%@ = %d, %@ to post-gamble action", [self.game turnLuckString], [self.game totalLuckForTurn], [self.game nameOfFirstPlayer]];
             break;
             
         default:

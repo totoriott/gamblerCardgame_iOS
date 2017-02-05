@@ -38,7 +38,10 @@
 
 - (BOOL)playerCanActDuringCurrentTurnState:(int)playerId;
 - (BOOL)isGameOver;
-- (BOOL)hasFirstPlayerPlayedLuck;
+- (int)luckPlayedByFirstPlayer;
+- (int)totalLuckForTurn;
+- (int)adjustForTurn;
+- (NSString*)turnLuckString;
 - (BOOL)haveAllPlayersPlayedLuck;
 - (BOOL)hasFirstPlayerChosenAdjustAction;
 - (BOOL)hasFirstPlayerChosenEndTurnAction;
@@ -46,4 +49,5 @@
 - (void)processGambleForTurn:(TurnLog*)currentTurn;
 - (void)processEndTurnForTurn:(TurnLog*)currentTurn;
 
+- (NSString*)nameOfFirstPlayer;
 @end
