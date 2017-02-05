@@ -178,4 +178,10 @@
     return myCell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // TODO: mycell.getgameaction seems to return nil, so i don't get cell directly
+    [self.game processGameAction:self.playerGameActions[indexPath.row]];
+    [self gameInstanceStateUpdate];
+}
+
 @end

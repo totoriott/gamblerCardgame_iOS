@@ -12,7 +12,7 @@
 @interface GameActionCollectionViewCell ()
 
 @property (strong, nonatomic) IBOutlet UILabel *actionName;
-@property (weak, nonatomic) GameAction* action;
+@property (strong, nonatomic) GameAction* action;
 @end
 
 @implementation GameActionCollectionViewCell
