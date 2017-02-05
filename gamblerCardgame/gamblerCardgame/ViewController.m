@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) GameInstance* game;
 
+@property (weak, nonatomic) IBOutlet UILabel *gameStatusLabel;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *playerInfoLabels;
 
 @end
@@ -104,6 +105,32 @@
 }
 
 - (void)gameInstanceStateUpdate {
+    // set game status UI
+    NSString* statusString = @"";
+    switch (self.game.turnState) {
+        case TURN_STATE_SELECT_LEAD_LUCK:
+            statusString = @"Leader is selecting luck";
+            break;
+            
+        case TURN_STATE_SELECT_LUCK:
+            statusString = @"Select Luck";
+            break;
+            
+        case TURN_STATE_SELECT_ADJUST_ACTION:
+            statusString = @"Select Adjust";
+            break;
+            
+        case TURN_STATE_SELECT_POST_GAMBLE_ACTION:
+            statusString = @"Select Post Gamble";
+            break;
+            
+        default:
+            statusString = @"Unknown Turn State";
+            break;
+    }
+    self.gameStatusLabel.text = statusString;
+    
+    // print each player's status
     for (UILabel* playerLabel in self.playerInfoLabels) {
         Player* player = self.game.players[playerLabel.tag];
         if (player) {
