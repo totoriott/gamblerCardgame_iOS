@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 #import "GameAction.h"
+#import "GameActionCollectionViewCell.h"
 #import "GameInstance.h"
 #import "Player.h"
 
@@ -32,6 +33,7 @@
     
     self.actionCollectionView.delegate = self;
     self.actionCollectionView.dataSource = self;
+    [self.actionCollectionView registerNib:[UINib nibWithNibName:@"GameActionCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"GameActionCollectionViewCell"];
     
     [self pressedReset:nil];
 }
@@ -151,6 +153,7 @@
     // TODO: yes, this is hardcoded rn
     NSArray<GameAction*>* actions = [self.game.players[0] currentPossibleActions:self.game];
     self.playerGameActions = actions;
+    [self.actionCollectionView reloadData];
 }
 
 // delegate stuff
@@ -166,19 +169,13 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
-    /*MyCollectionViewCell *myCell = [collectionView
-                                    dequeueReusableCellWithReuseIdentifier:@"MyCell"
+    GameActionCollectionViewCell *myCell = [collectionView
+                                    dequeueReusableCellWithReuseIdentifier:@"GameActionCollectionViewCell"
                                     forIndexPath:indexPath];
     
-    UIImage *image;
-    long row = [indexPath row];
+    myCell.actionName.text = [self.playerGameActions[0] readableName]; // TODO: this properly, pass action
     
-    image = [UIImage imageNamed:_carImages[row]];
-    
-    myCell.imageView.image = image;
-    
-    return myCell;*/
+    return myCell;
 }
 
 @end
