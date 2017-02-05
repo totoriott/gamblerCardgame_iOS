@@ -2,7 +2,7 @@
 //  GameActionCollectionViewCell.m
 //  gamblerCardgame
 //
-//  Created by Eric Aleshire on 2/5/17.
+//  Created by sayumeki on 2/5/17.
 //  Copyright © 2017 sayumeki. All rights reserved.
 //
 
@@ -25,6 +25,10 @@
 - (void)setupWithGameAction:(GameAction *)myAction {
     self.action = myAction;
     self.actionName.text = self.action.readableName;
+}
+
+- (GameAction*)getGameAction {
+    return _action;
 }
 
 @end
