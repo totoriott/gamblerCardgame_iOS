@@ -173,7 +173,7 @@
                                     dequeueReusableCellWithReuseIdentifier:@"GameActionCollectionViewCell"
                                     forIndexPath:indexPath];
     
-    myCell.actionName.text = [self.playerGameActions[0] readableName]; // TODO: this properly, pass action
+    [myCell setupWithGameAction:self.playerGameActions[indexPath.row]];
     
     return myCell;
 }

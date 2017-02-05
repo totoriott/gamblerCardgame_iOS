@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class GameAction;
+
 @interface GameActionCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *actionName;
+- (void)setupWithGameAction:(GameAction*)myAction;
 
 @end

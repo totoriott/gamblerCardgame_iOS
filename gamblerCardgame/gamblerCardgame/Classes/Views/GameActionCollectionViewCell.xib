@@ -24,10 +24,10 @@
                     </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.61014821314374612" green="0.70747794543792164" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.13499476874303751" green="1" blue="0.51690069291039697" alpha="1" colorSpace="calibratedRGB"/>
             <size key="customSize" width="121" height="38"/>
             <connections>
-                <outlet property="actionName" destination="uex-Uu-SDs" id="5sz-Jg-10o"/>
+                <outlet property="actionName" destination="uex-Uu-SDs" id="EL0-yr-9d7"/>
             </connections>
             <point key="canvasLocation" x="69.5" y="54"/>
         </collectionViewCell>
