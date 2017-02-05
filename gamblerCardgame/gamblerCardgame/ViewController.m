@@ -10,10 +10,13 @@
 
 #import "GameAction.h"
 #import "GameInstance.h"
+#import "Player.h"
 
 @interface ViewController ()
 
 @property (nonatomic, strong) GameInstance* game;
+
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *playerInfoLabels;
 
 @end
 
@@ -39,6 +42,8 @@
     //[self.game initGameFromSerialization:@"4;0101,1,11;0110,0,26;0100,-1,23;1101,1,21;1101,0,23;0011,-1,22;0211,0,27;0121,-1,26;1101,-1,29;3220,0,23;0202,0,23;0012,1,25;3000,0,25;0021,1,29;3201,0,23;2000,1,27;2101,0,24;1020,0,12;2102,0,13;2002,0,11;????,?,0?"];
     
     [self.game performAllAiActions]; // TODO: move later?
+    
+    [self gameInstanceStateUpdate];
 }
 
 - (IBAction)pressedLuck:(UIButton *)sender {
@@ -62,6 +67,8 @@
     action.turnState = self.game.turnState;
     action.choice1 = luckValue;
     [self.game processGameAction:action];
+    
+    [self gameInstanceStateUpdate];
 }
 
 - (IBAction)pressedAdjust:(UIButton *)sender {
@@ -79,6 +86,8 @@
     action.turnState = TURN_STATE_SELECT_ADJUST_ACTION;
     action.choice1 = adjustValue;
     [self.game processGameAction:action];
+    
+    [self gameInstanceStateUpdate];
 }
 
 - (IBAction)pressedEndAction:(UIButton *)sender {
@@ -90,6 +99,20 @@
     action.choice1 = ENDTURN_SUPER;
     action.choice2 = 1;
     [self.game processGameAction:action];
+    
+    [self gameInstanceStateUpdate];
+}
+
+- (void)gameInstanceStateUpdate {
+    for (UILabel* playerLabel in self.playerInfoLabels) {
+        Player* player = self.game.players[playerLabel.tag];
+        if (player) {
+            playerLabel.hidden = NO;
+            playerLabel.text = player.playerStatusString;
+        } else {
+            playerLabel.hidden = YES; // TODO: test this
+        }
+    }
 }
 
 @end
