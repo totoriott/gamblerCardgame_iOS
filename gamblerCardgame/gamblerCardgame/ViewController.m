@@ -16,8 +16,11 @@
 
 @property (nonatomic, strong) GameInstance* game;
 
+@property (strong, nonatomic) NSArray<GameAction*> *playerGameActions;
+
 @property (weak, nonatomic) IBOutlet UILabel *gameStatusLabel;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *playerInfoLabels;
+@property (weak, nonatomic) IBOutlet UICollectionView *actionCollectionView;
 
 @end
 
@@ -26,6 +29,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.actionCollectionView.delegate = self;
+    self.actionCollectionView.dataSource = self;
     
     [self pressedReset:nil];
 }
@@ -140,6 +146,39 @@
             playerLabel.hidden = YES; // TODO: test this
         }
     }
+    
+    // update what actions you can do
+    // TODO: yes, this is hardcoded rn
+    NSArray<GameAction*>* actions = [self.game.players[0] currentPossibleActions:self.game];
+    self.playerGameActions = actions;
+}
+
+// delegate stuff
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self.playerGameActions count];
+}
+
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+    /*MyCollectionViewCell *myCell = [collectionView
+                                    dequeueReusableCellWithReuseIdentifier:@"MyCell"
+                                    forIndexPath:indexPath];
+    
+    UIImage *image;
+    long row = [indexPath row];
+    
+    image = [UIImage imageNamed:_carImages[row]];
+    
+    myCell.imageView.image = image;
+    
+    return myCell;*/
 }
 
 @end
