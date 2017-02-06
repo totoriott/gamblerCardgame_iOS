@@ -9,6 +9,7 @@
 #import "GameInstance.h"
 #import "AiModel.h"
 #import "GameAction.h"
+#import "SavedDataManager.h"
 
 @implementation GameInstance
 
@@ -40,6 +41,46 @@
         
         // gamble / end turns will have been handled above
     }
+    [self.delegate gameInstanceWasUpdated];
+    // TODO: move this to function so process can use this also?
+}
+
+- (void)initGameFromSaveSlot:(int)saveSlot {
+    // TODO: refactor so it lines up with above
+    
+    _gameLog = [[[SavedDataManager alloc] init] loadGameFromSlot:saveSlot];
+    if (!_gameLog) { // TODO: better panicking
+        [self initNewGameWithPlayers:4];
+        [self.delegate gameInstanceWasUpdated];
+        return;
+    }
+    
+    int playerCount = (int)[[[_gameLog getMostRecentTurn] luckPlay] count];
+    [self initGameCommonSetup:playerCount];
+    
+    // this handles deserialization turn catchup
+    for (TurnLog* turn in _gameLog.turns) {
+        // TODO is this good
+        // TODO: make sure the game is in the proper state after
+        
+        // these will fail if not appropriate
+        [self processGambleForTurn:turn];
+        [self processEndTurnForTurn:turn];
+    }
+    
+    // set the proper game state if it hasn't changed from processing before
+    if (self.turnState == TURN_STATE_SELECT_LEAD_LUCK) {
+        if ([self hasFirstPlayerPlayedLuck]) {
+            [self setTurnState:TURN_STATE_SELECT_LUCK];
+        }
+        
+        if ([self haveAllPlayersPlayedLuck] && _turnState == TURN_STATE_SELECT_LUCK) {
+            [self setTurnState:TURN_STATE_SELECT_ADJUST_ACTION];
+        }
+        
+        // gamble / end turns will have been handled above
+    }
+    [self.delegate gameInstanceWasUpdated];
     // TODO: move this to function so process can use this also?
 }
 
@@ -115,6 +156,7 @@
     [_gameLog startNewTurn];
     [self setTurnState:TURN_STATE_SELECT_LEAD_LUCK];
     [self.delegate gameInstanceWasUpdated];
+    [[[SavedDataManager alloc] init] saveGame:self.gameLog toSlot:0]; // TODO: testing, remove later
 }
 
 - (BOOL)playerCanActDuringCurrentTurnState:(int)playerId {

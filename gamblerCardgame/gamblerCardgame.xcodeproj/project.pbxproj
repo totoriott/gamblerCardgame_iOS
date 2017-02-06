@@ -25,6 +25,7 @@
 		8B8428811E309A2100D754AF /* GameUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8428801E309A2100D754AF /* GameUtils.m */; };
 		8BE11EC71E47C4B30006FDC7 /* GameActionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE11EC51E47C4B30006FDC7 /* GameActionCollectionViewCell.m */; };
 		8BE11EC81E47C4B40006FDC7 /* GameActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE11EC61E47C4B30006FDC7 /* GameActionCollectionViewCell.xib */; };
+		8BE11ECC1E4863880006FDC7 /* SavedDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE11ECB1E4863880006FDC7 /* SavedDataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,8 @@
 		8BE11EC41E47C4B30006FDC7 /* GameActionCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameActionCollectionViewCell.h; path = Views/GameActionCollectionViewCell.h; sourceTree = "<group>"; };
 		8BE11EC51E47C4B30006FDC7 /* GameActionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameActionCollectionViewCell.m; path = Views/GameActionCollectionViewCell.m; sourceTree = "<group>"; };
 		8BE11EC61E47C4B30006FDC7 /* GameActionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameActionCollectionViewCell.xib; path = Views/GameActionCollectionViewCell.xib; sourceTree = "<group>"; };
+		8BE11ECB1E4863880006FDC7 /* SavedDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedDataManager.m; path = SavedData/SavedDataManager.m; sourceTree = "<group>"; };
+		8BE11ECD1E4863AB0006FDC7 /* SavedDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedDataManager.h; path = SavedData/SavedDataManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,7 @@
 		8B8428661E308F4600D754AF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8BE11ECA1E4863650006FDC7 /* SavedData */,
 				8BE11EC91E47C4BB0006FDC7 /* Views */,
 				8B84287E1E309A2100D754AF /* Utils */,
 				8B0840A91E33325F0094B5EA /* AiEngine */,
@@ -183,6 +187,15 @@
 				8BE11EC61E47C4B30006FDC7 /* GameActionCollectionViewCell.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		8BE11ECA1E4863650006FDC7 /* SavedData */ = {
+			isa = PBXGroup;
+			children = (
+				8BE11ECD1E4863AB0006FDC7 /* SavedDataManager.h */,
+				8BE11ECB1E4863880006FDC7 /* SavedDataManager.m */,
+			);
+			name = SavedData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +278,7 @@
 				8B8428781E308F4600D754AF /* GameBoard.m in Sources */,
 				8BE11EC71E47C4B30006FDC7 /* GameActionCollectionViewCell.m in Sources */,
 				8B8428541E308F3200D754AF /* AppDelegate.m in Sources */,
+				8BE11ECC1E4863880006FDC7 /* SavedDataManager.m in Sources */,
 				8B8428511E308F3200D754AF /* main.m in Sources */,
 				8B8428811E309A2100D754AF /* GameUtils.m in Sources */,
 				8B84287D1E308F4600D754AF /* TurnLog.m in Sources */,

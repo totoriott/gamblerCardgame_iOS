@@ -37,6 +37,7 @@
 @property (nonatomic) TurnState turnState;
 
 - (void)initNewGameWithPlayers:(int)playerCount;
+- (void)initGameFromSaveSlot:(int)saveSlot;
 - (void)initGameFromSerialization:(NSString*)serial;
 
 - (void)performAllAiActions;
