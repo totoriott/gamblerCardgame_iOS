@@ -60,6 +60,7 @@
     
     // this handles deserialization turn catchup
     for (TurnLog* turn in _gameLog.turns) {
+        self.turnState = TURN_STATE_SELECT_LEAD_LUCK;
         // TODO is this good
         // TODO: make sure the game is in the proper state after
         
@@ -156,7 +157,6 @@
     [_gameLog startNewTurn];
     [self setTurnState:TURN_STATE_SELECT_LEAD_LUCK];
     [self.delegate gameInstanceWasUpdated];
-    [[[SavedDataManager alloc] init] saveGame:self.gameLog toSlot:0]; // TODO: testing, remove later
 }
 
 - (BOOL)playerCanActDuringCurrentTurnState:(int)playerId {

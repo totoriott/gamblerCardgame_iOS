@@ -12,6 +12,7 @@
 #import "GameActionCollectionViewCell.h"
 #import "GameInstance.h"
 #import "Player.h"
+#import "SavedDataManager.h"
 
 @interface ViewController ()
 
@@ -42,6 +43,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)pressedSave:(id)sender {
+    [[[SavedDataManager alloc] init] saveGame:self.game.gameLog toSlot:0];
+}
+
+- (IBAction)pressedLoad:(id)sender {
+    self.game = [[GameInstance alloc] init];
+    self.game.delegate = self;
+    [self.game initGameFromSaveSlot:0];
 }
 
 - (IBAction)pressedReset:(id)sender {
