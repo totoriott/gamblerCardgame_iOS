@@ -15,6 +15,11 @@
 
 @class GameAction;
 
+@protocol GameInstanceUpdateDelegate <NSObject>
+@optional
+- (void)gameInstanceWasUpdated;
+@end
+
 @interface GameInstance : NSObject
 
 // TODO: serialize / deserialize
@@ -26,6 +31,8 @@
 @property (nonatomic, strong) GameConfig* gameConfig;
 @property (nonatomic, strong) GameLog* gameLog;
 @property (nonatomic, strong) GameBoard* gameBoard;
+
+@property (nonatomic, weak) id <GameInstanceUpdateDelegate> delegate;
 
 @property (nonatomic) TurnState turnState;
 

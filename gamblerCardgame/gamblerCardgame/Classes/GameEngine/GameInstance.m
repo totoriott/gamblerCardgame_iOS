@@ -114,6 +114,7 @@
     [self printGameStatus];
     [_gameLog startNewTurn];
     [self setTurnState:TURN_STATE_SELECT_LEAD_LUCK];
+    [self.delegate gameInstanceWasUpdated];
 }
 
 - (BOOL)playerCanActDuringCurrentTurnState:(int)playerId {
@@ -200,6 +201,9 @@
     if (![self isGameOver]) {
         [self performAllAiActions];
     }
+    
+    // TODO: this is lazy yes
+    [self.delegate gameInstanceWasUpdated];
 }
 
 - (void)performAllAiActions {

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GameInstance.h"
 
-@interface ViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, GameInstanceUpdateDelegate>
 
 
 @end
