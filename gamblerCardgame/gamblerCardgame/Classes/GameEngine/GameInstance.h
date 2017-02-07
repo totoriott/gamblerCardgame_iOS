@@ -22,8 +22,6 @@
 
 @interface GameInstance : NSObject
 
-// TODO: serialize / deserialize
-
 @property (nonatomic, strong) NSMutableArray<Player*>* players;
 @property (nonatomic) int currentPlayerIndex;
 @property (nonatomic) int fumbleMoneyTotal;

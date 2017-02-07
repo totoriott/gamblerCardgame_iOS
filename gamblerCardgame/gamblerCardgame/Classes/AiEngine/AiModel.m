@@ -30,7 +30,7 @@
     
     NSArray<GameAction*>* actions = [self.player currentPossibleActions:game];
     if (actions.count == 0) {
-        NSLog(@"No actions available when you should be able to act!"); // TODO: more detail
+        NSLog(@"No actions available when you should be able to act!"); 
     } else {
         int randomIndex = (arc4random() % [actions count]);
         GameAction* action = actions[randomIndex];

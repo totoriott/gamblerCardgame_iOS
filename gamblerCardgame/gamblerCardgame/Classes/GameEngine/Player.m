@@ -154,6 +154,7 @@
             action.turnState = game.turnState;
             action.choice1 = ENDTURN_BUY;
             action.choice2 = [card intValue];
+            // TODO: refactor this to add cost
             action.readableName = [NSString stringWithFormat:@"Buy %d", [card intValue]];
             [actions addObject:action];
         }
