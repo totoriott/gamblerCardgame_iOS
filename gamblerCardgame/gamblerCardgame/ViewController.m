@@ -63,57 +63,6 @@
     [self.game performAllAiActions]; // TODO: move later?
 }
 
-- (IBAction)pressedLuck:(UIButton *)sender {
-    // TODO: human is hardcoded rn
-    if (self.game.turnState != TURN_STATE_SELECT_LUCK && self.game.turnState != TURN_STATE_SELECT_LEAD_LUCK) {
-        return;
-    }
-    
-    int luckValue = 0;
-    if ([[sender currentTitle] containsString:@"1"]) {
-        luckValue = 1;
-    } else if ([[sender currentTitle] containsString:@"2"]) {
-        luckValue = 2;
-    }else if ([[sender currentTitle] containsString:@"3"]) {
-        luckValue = 3;
-    }
-    
-    // TODO: make sure it is a valid action
-    GameAction* action = [[GameAction alloc] init];
-    action.playerId = 0;
-    action.turnState = self.game.turnState;
-    action.choice1 = luckValue;
-    [self.game processGameAction:action];
-}
-
-- (IBAction)pressedAdjust:(UIButton *)sender {
-    // TODO: confirm valid
-    
-    int adjustValue = 0;
-    if ([[sender currentTitle] containsString:@"-"]) {
-        adjustValue = -1;
-    } else if ([[sender currentTitle] containsString:@"+"]) {
-        adjustValue = 1;
-    }
-    
-    GameAction* action = [[GameAction alloc] init];
-    action.playerId = 0;
-    action.turnState = TURN_STATE_SELECT_ADJUST_ACTION;
-    action.choice1 = adjustValue;
-    [self.game processGameAction:action];
-}
-
-- (IBAction)pressedEndAction:(UIButton *)sender {
-    // TODO: confirm valid
-    
-    GameAction* action = [[GameAction alloc] init];
-    action.playerId = 0;
-    action.turnState = TURN_STATE_SELECT_POST_GAMBLE_ACTION;
-    action.choice1 = ENDTURN_SUPER;
-    action.choice2 = 1;
-    [self.game processGameAction:action];
-}
-
 - (void)gameInstanceWasUpdated {
     // set game status UI
     NSString* statusString = @"";

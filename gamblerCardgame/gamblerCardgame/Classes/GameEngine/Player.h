@@ -33,7 +33,7 @@
 - (GameActionStatus)setCardToSuperWithValue:(int)winningNumber;
 - (void)addCardGambler:(CardGambler*)cardGambler;
 
-// TODO: MOVE THESE INTO AI LATER AND GIVE INTELLIGENCE AND BOARD STATE
+// Ai-related actions
 - (NSArray<GameAction*>*)currentPossibleActions:(GameInstance *)game;
 - (GameAction*)getSelectedAiAction:(GameInstance*)game;
 @end

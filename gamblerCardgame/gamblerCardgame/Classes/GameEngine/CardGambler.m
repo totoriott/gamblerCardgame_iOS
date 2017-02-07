@@ -8,20 +8,29 @@
 
 #import "CardGambler.h"
 
+typedef NS_ENUM(NSUInteger, GamblerConfig) {
+    GAMBLER_CONFIG_WINNING_NUMBER = 1,
+    GAMBLER_CONFIG_SUPER_WINNING_NUMBER,
+    GAMBLER_CONFIG_COST,
+    GAMBLER_CONFIG_CARD_VALUE_GRANTED,
+    GAMBLER_CONFIG_SUPER_CARD_VALUE_GRANTED,
+    GAMBLER_CONFIG_PAYOUT_VALUE,
+    GAMBLER_CONFIG_SUPER_PAYOUT_VALUE,
+};
+
 @implementation CardGambler
 
 - (instancetype)initWithCardConfig:(NSArray*)config {
     if (self = [super init]) {
         _isSuper = NO;
         
-        // TODO: don't hardcode?
-        _winningNumber = [config[1] intValue];
-        _superWinningNumber = [config[2] intValue];
-        _cost = [config[3] intValue];
-        _cardValueGranted = [config[4] intValue];
-        _superCardValueGranted = [config[5] intValue];
-        _payoutValue = [config[6] intValue];
-        _superPayoutValue = [config[7] intValue];
+        _winningNumber = [config[GAMBLER_CONFIG_WINNING_NUMBER] intValue];
+        _superWinningNumber = [config[GAMBLER_CONFIG_SUPER_WINNING_NUMBER] intValue];
+        _cost = [config[GAMBLER_CONFIG_COST] intValue];
+        _cardValueGranted = [config[GAMBLER_CONFIG_CARD_VALUE_GRANTED] intValue];
+        _superCardValueGranted = [config[GAMBLER_CONFIG_SUPER_CARD_VALUE_GRANTED] intValue];
+        _payoutValue = [config[GAMBLER_CONFIG_PAYOUT_VALUE] intValue];
+        _superPayoutValue = [config[GAMBLER_CONFIG_SUPER_PAYOUT_VALUE] intValue];
     }
     return self;
 }

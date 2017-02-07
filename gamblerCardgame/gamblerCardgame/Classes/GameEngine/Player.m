@@ -44,7 +44,7 @@
         }
     }
     
-    return statusString; // TODO
+    return statusString;
 }
 
 - (NSArray<NSNumber*>*)availableLuckCards {
