@@ -114,6 +114,18 @@
     return [self.aiModel getSelectedAiAction:game];
 }
 
+- (NSArray<NSNumber*>*)cardNumbersThatCanBeSupered {
+    NSMutableArray<NSNumber*>* cardNumbers = [NSMutableArray array];
+    // TODO: deduplicate, remove already supered ones
+    for (CardGambler* card in self.cardGamblers) {
+        NSNumber* cardNumber = [NSNumber numberWithInt:[card cardWinningNumber]];
+        if (![card isSuper] && ![cardNumbers containsObject:cardNumber]) {
+            [cardNumbers addObject:cardNumber];
+        }
+    }
+    return cardNumbers;
+}
+
 // what this player can currently do
 - (NSArray<GameAction*>*)currentPossibleActions:(GameInstance *)game {
     NSMutableArray<GameAction*>* actions = [NSMutableArray array];
@@ -160,14 +172,15 @@
         }
         
         // cards you can super
-        // TODO: deduplicate, don't let you super already-supered cards when you implement "no action" action
-        for (CardGambler* card in self.cardGamblers) {
+        // TODO: implement "no action" action
+        NSArray<NSNumber*>* cardsCanSuper = [self cardNumbersThatCanBeSupered];
+        for (NSNumber* card in cardsCanSuper) {
             GameAction* action = [[GameAction alloc] init];
             action.playerId = self.playerId;
             action.turnState = game.turnState;
             action.choice1 = ENDTURN_SUPER;
-            action.choice2 = [card cardWinningNumber];
-            action.readableName = [NSString stringWithFormat:@"Super %d", [card cardWinningNumber]];
+            action.choice2 = [card intValue];
+            action.readableName = [NSString stringWithFormat:@"Super %d", [card intValue]];
             [actions addObject:action];
         }
     }
