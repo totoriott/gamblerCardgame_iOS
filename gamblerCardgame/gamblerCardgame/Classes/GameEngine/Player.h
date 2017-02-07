@@ -35,5 +35,5 @@
 
 // TODO: MOVE THESE INTO AI LATER AND GIVE INTELLIGENCE AND BOARD STATE
 - (NSArray<GameAction*>*)currentPossibleActions:(GameInstance *)game;
-- (void)performAiActions:(GameInstance*)game;
+- (GameAction*)getSelectedAiAction:(GameInstance*)game;
 @end

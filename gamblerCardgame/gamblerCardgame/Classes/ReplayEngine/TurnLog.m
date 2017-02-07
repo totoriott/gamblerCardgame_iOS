@@ -91,7 +91,7 @@
 }
 
 - (int)getLuckPlayForPlayer:(int)playerId {
-    return [_luckPlay[playerId] intValue]; // TODO bounds check
+    return [_luckPlay[playerId] intValue];
 }
 
 - (int)getLuckAdjust {

@@ -110,16 +110,8 @@
     }
 }
 
-- (void)performAiActions:(GameInstance *)game {
-    /*
-    NSArray* possibleActions = [self currentPossibleActions:game];
-    for (GameAction* action in possibleActions) {
-        NSLog(@"%@", action.readableName);
-    }
-    NSLog(@"...");
-    // TODO: remove for testing */
-    
-    [self.aiModel performAiActions:game];
+- (GameAction*)getSelectedAiAction:(GameInstance *)game {
+    return [self.aiModel getSelectedAiAction:game];
 }
 
 // what this player can currently do

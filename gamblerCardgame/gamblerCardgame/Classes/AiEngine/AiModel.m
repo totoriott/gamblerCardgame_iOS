@@ -23,9 +23,9 @@
     return self;
 }
 
-- (void)performAiActions:(GameInstance *)game {
+- (GameAction*)getSelectedAiAction:(GameInstance *)game {
     if (![game playerCanActDuringCurrentTurnState:self.player.playerId]) {
-        return;
+        return nil;
     }
     
     NSArray<GameAction*>* actions = [self.player currentPossibleActions:game];
@@ -34,8 +34,10 @@
     } else {
         int randomIndex = (arc4random() % [actions count]);
         GameAction* action = actions[randomIndex];
-        [game processGameAction:action]; // TODO: refactor to pass this back later?
+        return action;
     }
+    
+    return nil;
 }
 
 @end

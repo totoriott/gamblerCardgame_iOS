@@ -123,7 +123,7 @@
     // TODO: for simplicity sake, we are just giving everyone random cards for now
     for (Player* player in _players) {
         int value1, value2;
-        int randomIndex = 0; // TODO: force everyone to 1/2 for now (arc4random() % 3);
+        int randomIndex = 0;
         switch (randomIndex) {
             case 0:
                 value1 = 1;
@@ -251,7 +251,10 @@
 - (void)performAllAiActions {
     // TODO: only process AI actions if you're the "server" of course
     for (Player* player in _players) {
-        [player performAiActions:self];
+        GameAction* selectedAction = [player getSelectedAiAction:self];
+        if (selectedAction) {
+            [self processGameAction:selectedAction];
+        }
     }
 }
 

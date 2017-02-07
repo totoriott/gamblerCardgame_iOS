@@ -11,13 +11,13 @@
 #import "CardGambler.h"
 #import "GameUtils.h"
 
-@class GameInstance, Player;
+@class GameInstance, Player, GameAction;
 
 @interface AiModel : NSObject
 
 @property (nonatomic, strong) Player* player;
 
 - (instancetype)initWithPlayer:(Player*)myPlayer;
-- (void)performAiActions:(GameInstance*)game;
+- (GameAction*)getSelectedAiAction:(GameInstance*)game;
 
 @end

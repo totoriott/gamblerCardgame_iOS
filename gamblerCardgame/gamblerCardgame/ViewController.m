@@ -59,10 +59,7 @@
     // Testing point for text-based app
     self.game = [[GameInstance alloc] init];
     self.game.delegate = self;
-    //[self.game initGameFromSaveSlot:0];
     [self.game initNewGameWithPlayers:4];
-    //[self.game initGameFromSerialization:@"4;0101,1,11;0110,0,26;0100,-1,23;1101,1,21;1101,0,23;0011,-1,22;0211,0,27;0121,-1,26;1101,-1,29;3220,0,23;0202,0,23;0012,1,25;3000,0,25;0021,1,29;3201,0,23;2000,1,27;2101,0,24;1020,0,12;2102,0,13;2002,0,11;????,?,0?"];
-    
     [self.game performAllAiActions]; // TODO: move later?
 }
 
